@@ -19,7 +19,10 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7",
-    "zendframework/zendframework": "~3.0"
+    "zendframework/zendframework": "~3.0",
+    "iteaoffice/contact": "dev-develop",
+    "jield-webdev/bjy-authorize": "dev-master",
+    "phpunit/phpunit": "5.7.x"
   },
   "autoload": {
     "psr-4": {
