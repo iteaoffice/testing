@@ -23,7 +23,9 @@
     "iteaoffice/contact": "dev-develop",
     "zf-commons/zfc-user": "2.x-dev",
     "jield-webdev/bjy-authorize": "dev-master",
-    "phpunit/phpunit": "5.7.x"
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "5.7.x",
+    "phpunit/php-code-coverage": "^4.0"
   },
   "autoload": {
     "psr-4": {
