@@ -21,6 +21,7 @@
     "php": "^7",
     "zendframework/zendframework": "~3.0",
     "iteaoffice/contact": "dev-develop",
+    "zf-commons/zfc-user": "2.x-dev",
     "jield-webdev/bjy-authorize": "dev-master",
     "phpunit/phpunit": "5.7.x"
   },
