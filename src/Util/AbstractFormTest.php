@@ -61,7 +61,7 @@ abstract class AbstractFormTest extends PHPUnit_Framework_TestCase
 
         $config = ArrayUtils::merge(
         // Grabbing the full application + module configuration:
-            include __DIR__ . '/../../../../config/application.config.php',
+            include __DIR__ . '/../../../../../config/application.config.php',
             $defaultConfigOverrides,
             $this->getConfigOverrides()
         );

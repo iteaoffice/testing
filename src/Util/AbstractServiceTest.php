@@ -10,7 +10,10 @@
 
 namespace Testing\Util;
 
+use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
+use General\Email;
+use General\Service\EmailService;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase;
 use Zend\Mvc\Service\ServiceManagerConfig;
@@ -61,7 +64,7 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
 
         $config = ArrayUtils::merge(
         // Grabbing the full application + module configuration:
-            include __DIR__ . '/../../../../config/application.config.php',
+            include __DIR__ . '/../../../../../config/application.config.php',
             $defaultConfigOverrides,
             $this->getConfigOverrides()
         );
@@ -104,17 +107,21 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
      * @param string|null     $entityClass
      * @param MockObject|null $repositoryMock
      *
-     * @return MockObject
+     * @return MockObject|EntityManager
      */
     protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
+        $entityManagerMockBuilder->setMethods(['persist', 'flush']);
         if ($mockRepository) { // Just mock the getRepository method
-            $entityManagerMockBuilder->setMethods(['getRepository']);
+            $entityManagerMockBuilder->setMethods(['persist', 'flush', 'getRepository']);
         }
         $entityManagerMock = $entityManagerMockBuilder->getMock();
+
+        $entityManagerMock->expects($this->any())->method('persist');
+        $entityManagerMock->expects($this->any())->method('flush');
 
         // Mock custom entity repository when provided
         if ($mockRepository) {
@@ -125,6 +132,45 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
         }
 
         return $entityManagerMock;
+    }
+
+    /**
+     * @return MockObject|AdminService
+     */
+    public function getAdminServiceMock()
+    {
+        //Mock the admin service
+        $adminServiceMock = $this->getMockBuilder(AdminService::class)
+                                 ->setMethods(['flushPermitsByEntityAndId',])->getMock();
+        $adminServiceMock->expects($this->any())
+                         ->method('flushPermitsByEntityAndId')
+                         ->will($this->returnValue(true));
+
+        return $adminServiceMock;
+    }
+
+    /**
+     * @return MockObject|EmailService
+     */
+    public function getEmailServiceMock()
+    {
+        $email = new Email([], []);
+
+        //Mock the email service
+        $emailServiceMock = $this->getMockBuilder(EmailService::class)
+                                 ->disableOriginalConstructor()
+                                 ->setMethods(['create', 'setTemplate', 'send'])->getMock();
+        $emailServiceMock->expects($this->any())
+                         ->method('create')
+                         ->will($this->returnValue($email));
+        $emailServiceMock->expects($this->any())
+                         ->method('setTemplate')
+                         ->will($this->returnValue($emailServiceMock));
+        $emailServiceMock->expects($this->any())
+                         ->method('send')
+                         ->will($this->returnValue('OK'));
+
+        return $emailServiceMock;
     }
 
 }
