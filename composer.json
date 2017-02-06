@@ -25,7 +25,8 @@
     "jield-webdev/bjy-authorize": "dev-master",
     "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "^6.0",
-    "phpunit/php-code-coverage": "^5.0"
+    "phpunit/php-code-coverage": "^5.0",
+    "zendframework/zend-test": "^3.0"
   },
   "autoload": {
     "psr-4": {
