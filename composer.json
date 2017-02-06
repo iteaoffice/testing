@@ -24,8 +24,8 @@
     "zf-commons/zfc-user": "2.x-dev",
     "jield-webdev/bjy-authorize": "dev-master",
     "roave/security-advisories": "dev-master",
-    "phpunit/phpunit": "5.7.x",
-    "phpunit/php-code-coverage": "^4.0"
+    "phpunit/phpunit": "^6.0",
+    "phpunit/php-code-coverage": "^5.0"
   },
   "autoload": {
     "psr-4": {

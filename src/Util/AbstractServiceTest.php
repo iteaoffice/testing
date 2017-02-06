@@ -14,6 +14,7 @@ use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
 use General\Email;
 use General\Service\EmailService;
+use General\Service\GeneralService;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase;
 use Zend\Mvc\Service\ServiceManagerConfig;
