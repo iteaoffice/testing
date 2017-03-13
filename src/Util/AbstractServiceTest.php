@@ -14,9 +14,8 @@ use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
 use General\Email;
 use General\Service\EmailService;
-use General\Service\GeneralService;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use PHPUnit_Framework_TestCase;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
@@ -26,7 +25,7 @@ use Zend\Stdlib\ArrayUtils;
  *
  * @package Testing\Controller
  */
-abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
+abstract class AbstractServiceTest extends TestCase
 {
     /**
      * @var ServiceManager
@@ -53,7 +52,7 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        if ( ! defined('ITEAOFFICE_ENVIRONMENT')) {
+        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
@@ -72,7 +71,7 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
 
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
-        $serviceManagerConfig      = new ServiceManagerConfig($serviceManagerConfigArray);
+        $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
         $serviceManagerConfig->configureServiceManager($serviceManager);
@@ -105,7 +104,7 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string|null     $entityClass
+     * @param string|null $entityClass
      * @param MockObject|null $repositoryMock
      *
      * @return MockObject|EntityManager
@@ -127,9 +126,9 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
         // Mock custom entity repository when provided
         if ($mockRepository) {
             $entityManagerMock->expects($this->atLeastOnce())
-                              ->method('getRepository')
-                              ->with($this->equalTo($entityClass))
-                              ->will($this->returnValue($repositoryMock));
+                ->method('getRepository')
+                ->with($this->equalTo($entityClass))
+                ->will($this->returnValue($repositoryMock));
         }
 
         return $entityManagerMock;
@@ -142,10 +141,10 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
     {
         //Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)
-                                 ->setMethods(['flushPermitsByEntityAndId',])->getMock();
+            ->setMethods(['flushPermitsByEntityAndId',])->getMock();
         $adminServiceMock->expects($this->any())
-                         ->method('flushPermitsByEntityAndId')
-                         ->will($this->returnValue(true));
+            ->method('flushPermitsByEntityAndId')
+            ->will($this->returnValue(true));
 
         return $adminServiceMock;
     }
@@ -159,17 +158,17 @@ abstract class AbstractServiceTest extends PHPUnit_Framework_TestCase
 
         //Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
-                                 ->disableOriginalConstructor()
-                                 ->setMethods(['create', 'setTemplate', 'send'])->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['create', 'setTemplate', 'send'])->getMock();
         $emailServiceMock->expects($this->any())
-                         ->method('create')
-                         ->will($this->returnValue($email));
+            ->method('create')
+            ->will($this->returnValue($email));
         $emailServiceMock->expects($this->any())
-                         ->method('setTemplate')
-                         ->will($this->returnValue($emailServiceMock));
+            ->method('setTemplate')
+            ->will($this->returnValue($emailServiceMock));
         $emailServiceMock->expects($this->any())
-                         ->method('send')
-                         ->will($this->returnValue('OK'));
+            ->method('send')
+            ->will($this->returnValue('OK'));
 
         return $emailServiceMock;
     }
