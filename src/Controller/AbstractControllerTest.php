@@ -101,7 +101,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         $this->setApplicationConfig(
             ArrayUtils::merge(
             // Grabbing the full application + module configuration:
-                include __DIR__ . '/../../../../config/application.config.php',
+                include __DIR__ . '/../../../../../config/application.config.php',
                 $configOverrides,
                 $this->configOverrides
             )

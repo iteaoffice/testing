@@ -11,6 +11,7 @@
 namespace Testing\Util;
 
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase;
 use Zend\Mvc\Service\ServiceManagerConfig;
@@ -22,7 +23,7 @@ use Zend\Stdlib\ArrayUtils;
  *
  * @package Testing\Controller
  */
-abstract class AbstractInputFilterTest extends PHPUnit_Framework_TestCase
+abstract class AbstractInputFilterTest extends TestCase
 {
     /**
      * @var ServiceManager
@@ -49,7 +50,7 @@ abstract class AbstractInputFilterTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        if ( ! defined('ITEAOFFICE_ENVIRONMENT')) {
+        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
@@ -68,7 +69,7 @@ abstract class AbstractInputFilterTest extends PHPUnit_Framework_TestCase
 
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
-        $serviceManagerConfig      = new ServiceManagerConfig($serviceManagerConfigArray);
+        $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
         $serviceManagerConfig->configureServiceManager($serviceManager);
@@ -101,7 +102,7 @@ abstract class AbstractInputFilterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string|null     $entityClass
+     * @param string|null $entityClass
      * @param MockObject|null $repositoryMock
      *
      * @return MockObject
@@ -119,9 +120,9 @@ abstract class AbstractInputFilterTest extends PHPUnit_Framework_TestCase
         // Mock custom entity repository when provided
         if ($mockRepository) {
             $entityManagerMock->expects($this->atLeastOnce())
-                              ->method('getRepository')
-                              ->with($this->equalTo($entityClass))
-                              ->will($this->returnValue($repositoryMock));
+                ->method('getRepository')
+                ->with($this->equalTo($entityClass))
+                ->will($this->returnValue($repositoryMock));
         }
 
         return $entityManagerMock;
