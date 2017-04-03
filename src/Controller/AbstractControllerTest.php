@@ -91,6 +91,8 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         // such as sample view templates, path stacks, module_listener_options,
         // etc.
         $configOverrides = [
+            'modules' => [
+            ],
             'zfctwig' => [
                 'environment_options' => [
                     'cache' => false,
