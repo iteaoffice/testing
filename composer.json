@@ -21,6 +21,7 @@
     "php": "^7.1",
     "zendframework/zend-test": "~3.0",
     "doctrine/doctrine-orm-module": "~1.1",
+    "phpunit/php-code-coverage": "^4.0.4",
     "zf-commons/zfc-user": "2.x-dev",
     "jield-webdev/bjy-authorize": "dev-master",
     "roave/security-advisories": "dev-master"
