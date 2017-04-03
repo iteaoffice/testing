@@ -90,27 +90,15 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         // You can override configuration here with test case specific values,
         // such as sample view templates, path stacks, module_listener_options,
         // etc.
-        $defaultConfigOverrides = [
-            'modules'         => [
-                'Zend\Router',
-            ],
-            'service_manager' => [
-                'use_defaults' => true,
-                'factories'    => [],
-            ],
-            'zfctwig'         => [
-                'environment_options' => [
-                    'cache' => false,
-                ],
-            ],
-        ];
+        $defaultConfigOverrides = [];
 
         $configFile = __DIR__ . '/../../../../../config/application.config.php';
 
         $this->setApplicationConfig(
             ArrayUtils::merge(
             // Grabbing the full application + module configuration:
-                file_exists($configFile) ? include $configFile : [],
+                file_exists($configFile) ? include $configFile :
+                    include __DIR__ . '/../../config/application.config.php',
                 $defaultConfigOverrides,
                 $this->configOverrides
             )
