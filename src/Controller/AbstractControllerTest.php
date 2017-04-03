@@ -82,7 +82,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      */
     public function setUp()
     {
-        if ( ! defined('ITEAOFFICE_ENVIRONMENT')) {
+        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
@@ -98,10 +98,12 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
             ],
         ];
 
+        $configFile = include __DIR__ . '/../../../../../config/application.config.php';
+
         $this->setApplicationConfig(
             ArrayUtils::merge(
             // Grabbing the full application + module configuration:
-                include __DIR__ . '/../../../../../config/application.config.php',
+                file_exists($configFile) ? include $configFile : [],
                 $configOverrides,
                 $this->configOverrides
             )
@@ -133,8 +135,8 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      * Assert route access for controller
      *
      * @param string $route
-     * @param array  $accessRoles
-     * @param int    $expectedStatusCode
+     * @param array $accessRoles
+     * @param int $expectedStatusCode
      */
     public function assertRouteAccess(string $route, array $accessRoles = [], $expectedStatusCode = 200)
     {
@@ -153,13 +155,13 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     {
         // Mock route roles for BjyAuthorize
         $routeAuthMock = $this->getMockBuilder(AuthenticationIdentityProvider::class)
-                              ->disableOriginalConstructor()
-                              ->setMethods(['getIdentityRoles'])
-                              ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['getIdentityRoles'])
+            ->getMock();
 
         $routeAuthMock->expects($this->any())
-                      ->method('getIdentityRoles')
-                      ->will($this->returnValue(array_map('strtolower', $accessRoles)));
+            ->method('getIdentityRoles')
+            ->will($this->returnValue(array_map('strtolower', $accessRoles)));
 
         $serviceManager = $this->getApplicationServiceLocator();
         // Note: yes, this has to be ProviderInterface::class, see BjyAuthorize::load()
@@ -171,8 +173,8 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     /**
      * Mock a service in the service manager, keeping a backup of the original instance
      *
-     * @param string         $service
-     * @param object         $mockInstance
+     * @param string $service
+     * @param object $mockInstance
      * @param ServiceManager $serviceManager
      */
     protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager = null)
@@ -198,7 +200,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     /**
      * Reset a mocked object in the service manager to its original instance
      *
-     * @param string         $service
+     * @param string $service
      * @param ServiceManager $serviceManager
      */
     protected function resetService(string $service, ServiceManager $serviceManager = null)
@@ -244,16 +246,16 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
 
         // Mock ZfcUserAuthentication controller plugin
         $authPluginMock = $this->getMockBuilder(ZfcUserAuthentication::class)
-                               ->setMethods(['getIdentity', 'hasIdentity'])
-                               ->getMock();
+            ->setMethods(['getIdentity', 'hasIdentity'])
+            ->getMock();
 
         $authPluginMock->expects($this->any())
-                       ->method('getIdentity')
-                       ->will($this->returnValue($contact));
+            ->method('getIdentity')
+            ->will($this->returnValue($contact));
 
         $authPluginMock->expects($this->any())
-                       ->method('hasIdentity')
-                       ->will($this->returnValue(true));
+            ->method('hasIdentity')
+            ->will($this->returnValue(true));
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');

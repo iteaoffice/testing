@@ -62,9 +62,11 @@ abstract class AbstractServiceTest extends TestCase
             ],
         ];
 
+        $configFile = include __DIR__ . '/../../../../../config/application.config.php';
+
         $config = ArrayUtils::merge(
         // Grabbing the full application + module configuration:
-            include __DIR__ . '/../../../../../config/application.config.php',
+            file_exists($configFile) ? include $configFile : [],
             $defaultConfigOverrides,
             $this->getConfigOverrides()
         );
