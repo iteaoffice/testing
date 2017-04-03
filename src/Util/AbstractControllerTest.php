@@ -66,12 +66,14 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         // such as sample view templates, path stacks, module_listener_options,
         // etc.
         $defaultConfigOverrides = [
-            'modules'                 => [
+            'modules'         => [
+                'Zend\Router',
             ],
-            'module_listener_options' => [
-                'config_cache_enabled' => false,
+            'service_manager' => [
+                'use_defaults' => true,
+                'factories'    => [],
             ],
-            'zfctwig'                 => [
+            'zfctwig'         => [
                 'environment_options' => [
                     'cache' => false,
                 ],
