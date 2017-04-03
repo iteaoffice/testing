@@ -19,7 +19,6 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7",
-    "zendframework/zendframework": "~3.0",
     "zendframework/zend-test": "~3.0",
     "iteaoffice/contact": "dev-develop",
     "zf-commons/zfc-user": "2.x-dev",
