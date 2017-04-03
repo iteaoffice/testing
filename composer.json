@@ -21,13 +21,6 @@
     "php": "^7.1",
     "zendframework/zend-test": "~3.0",
     "doctrine/doctrine-orm-module": "~1.1",
-    "iteaoffice/contact": "dev-develop",
-    "iteaoffice/general": "dev-develop",
-    "iteaoffice/program": "dev-develop",
-    "iteaoffice/affiliation": "dev-develop",
-    "iteaoffice/project": "dev-develop",
-    "iteaoffice/event": "dev-develop",
-    "iteaoffice/invoice": "dev-develop",
     "zf-commons/zfc-user": "2.x-dev",
     "jield-webdev/bjy-authorize": "dev-master",
     "roave/security-advisories": "dev-master"
