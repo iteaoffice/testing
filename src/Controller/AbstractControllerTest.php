@@ -98,7 +98,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
             ],
         ];
 
-        $configFile = include __DIR__ . '/../../../../../config/application.config.php';
+        $configFile = __DIR__ . '/../../../../../config/application.config.php';
 
         $this->setApplicationConfig(
             ArrayUtils::merge(
