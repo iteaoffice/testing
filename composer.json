@@ -22,6 +22,13 @@
     "zendframework/zend-test": "~3.0",
     "doctrine/doctrine-orm-module": "~1.1",
     "zf-commons/zfc-user": "2.x-dev",
+    "pdepend/pdepend": "@stable",
+    "friendsofphp/php-cs-fixer": "@stable",
+    "squizlabs/php_codesniffer": "@stable",
+    "phploc/phploc": "@stable",
+    "doctrine/data-fixtures": "@stable",
+    "jakub-onderka/php-parallel-lint": "@stable",
+    "jakub-onderka/php-console-highlighter": "@stable"
     "jield-webdev/bjy-authorize": "dev-master",
     "roave/security-advisories": "dev-master"
   },
