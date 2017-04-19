@@ -56,18 +56,22 @@ abstract class AbstractServiceTest extends TestCase
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
-        $defaultConfigOverrides = [
-            'module_listener_options' => [
-                'config_cache_enabled' => false,
-            ],
-        ];
+        // The module configuration should still be applicable for tests.
+        // You can override configuration here with test case specific values,
+        // such as sample view templates, path stacks, module_listener_options,
+        // etc.
+        $defaultConfigOverrides = [];
+
+        $configFile = __DIR__ . '/../../../../../config/application.config.php';
 
         $config = ArrayUtils::merge(
         // Grabbing the full application + module configuration:
-            include __DIR__ . '/../../../../../config/application.config.php',
+            file_exists($configFile) ? include $configFile :
+                include __DIR__ . '/../../config/application.config.php',
             $defaultConfigOverrides,
-            $this->getConfigOverrides()
+            $this->configOverrides
         );
+
 
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];

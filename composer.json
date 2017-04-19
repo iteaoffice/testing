@@ -4,7 +4,7 @@
   "license": "proprietary",
   "description": "General code for testing",
   "keywords": [
-    "project"
+    "test"
   ],
   "homepage": "https://itea3.org",
   "support": {
@@ -18,14 +18,19 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7",
-    "zendframework/zendframework": "~3.0",
+    "php": "^7.1",
     "zendframework/zend-test": "~3.0",
-    "iteaoffice/contact": "dev-develop",
+    "doctrine/doctrine-orm-module": "~1.1",
     "zf-commons/zfc-user": "2.x-dev",
+    "pdepend/pdepend": "@stable",
+    "friendsofphp/php-cs-fixer": "@stable",
+    "squizlabs/php_codesniffer": "@stable",
+    "phploc/phploc": "@stable",
+    "doctrine/data-fixtures": "@stable",
+    "jakub-onderka/php-parallel-lint": "@stable",
+    "jakub-onderka/php-console-highlighter": "@stable",
     "jield-webdev/bjy-authorize": "dev-master",
-    "roave/security-advisories": "dev-master",
-    "phpunit/php-code-coverage": "^5.0"
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {
@@ -34,8 +39,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0-dev",
-      "dev-develop": "1.1-dev"
+      "dev-master": "1.0.x-dev",
+      "dev-develop": "1.1.x-dev"
     }
   }
 }
