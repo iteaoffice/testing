@@ -114,14 +114,16 @@ abstract class AbstractServiceTest extends TestCase
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $entityManagerMockBuilder->setMethods(['persist', 'flush']);
-        if ($mockRepository) { // Just mock the getRepository method
-            $entityManagerMockBuilder->setMethods(['persist', 'flush', 'getRepository']);
+        $mockMethods = ['persist', 'flush', 'remove'];
+        $entityManagerMockBuilder->setMethods($mockMethods);
+        if ($mockRepository) { // Mock the getRepository method
+            $entityManagerMockBuilder->setMethods(array_merge($mockMethods, ['getRepository']));
         }
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 
         $entityManagerMock->expects($this->any())->method('persist');
         $entityManagerMock->expects($this->any())->method('flush');
+        $entityManagerMock->expects($this->any())->method('remove');
 
         // Mock custom entity repository when provided
         if ($mockRepository) {
