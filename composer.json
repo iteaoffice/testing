@@ -20,8 +20,8 @@
   "require": {
     "php": "^7.1",
     "zendframework/zend-test": "~3.0",
-    "doctrine/doctrine-orm-module": "~1.1",
-    "zf-commons/zfc-user": "2.x-dev",
+    "doctrine/doctrine-orm-module": "~2.0",
+    "zf-commons/zfc-user": "~3.0",
     "pdepend/pdepend": "@stable",
     "friendsofphp/php-cs-fixer": "@stable",
     "squizlabs/php_codesniffer": "@stable",
