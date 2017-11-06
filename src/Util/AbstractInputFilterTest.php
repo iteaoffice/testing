@@ -108,9 +108,9 @@ abstract class AbstractInputFilterTest extends TestCase
      * @param string|null $entityClass
      * @param MockObject|null $repositoryMock
      *
-     * @return MockObject
+     * @return MockObject|EntityManager
      */
-    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
+    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null)
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 
@@ -130,5 +130,4 @@ abstract class AbstractInputFilterTest extends TestCase
 
         return $entityManagerMock;
     }
-
 }

@@ -72,7 +72,6 @@ abstract class AbstractServiceTest extends TestCase
             $this->configOverrides
         );
 
-
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
         $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
@@ -113,19 +112,21 @@ abstract class AbstractServiceTest extends TestCase
      *
      * @return MockObject|EntityManager
      */
-    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
+    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $entityManagerMockBuilder->setMethods(['persist', 'flush']);
-        if ($mockRepository) { // Just mock the getRepository method
-            $entityManagerMockBuilder->setMethods(['persist', 'flush', 'getRepository']);
+        $mockMethods = ['persist', 'flush', 'remove'];
+        $entityManagerMockBuilder->setMethods($mockMethods);
+        if ($mockRepository) { // Mock the getRepository method
+            $entityManagerMockBuilder->setMethods(array_merge($mockMethods, ['getRepository']));
         }
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 
         $entityManagerMock->expects($this->any())->method('persist');
         $entityManagerMock->expects($this->any())->method('flush');
+        $entityManagerMock->expects($this->any())->method('remove');
 
         // Mock custom entity repository when provided
         if ($mockRepository) {
@@ -176,5 +177,4 @@ abstract class AbstractServiceTest extends TestCase
 
         return $emailServiceMock;
     }
-
 }
