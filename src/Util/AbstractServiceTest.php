@@ -72,7 +72,6 @@ abstract class AbstractServiceTest extends TestCase
             $this->configOverrides
         );
 
-
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
         $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
@@ -113,7 +112,7 @@ abstract class AbstractServiceTest extends TestCase
      *
      * @return MockObject|EntityManager
      */
-    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
+    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 
@@ -178,5 +177,4 @@ abstract class AbstractServiceTest extends TestCase
 
         return $emailServiceMock;
     }
-
 }

@@ -235,7 +235,8 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         $accessRoles = array_map(
             function (Access $access) {
                 return $access->getAccess();
-            }, $contact->getAccess()->toArray()
+            },
+            $contact->getAccess()->toArray()
         );
         $this->mockAccessRoles($accessRoles);
 
