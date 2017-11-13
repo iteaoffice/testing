@@ -23,5 +23,5 @@ final class Version
     /**
      *
      */
-    const VERSION = '1.0.3-DEV';
+    const VERSION = '1.1.0';
 }
