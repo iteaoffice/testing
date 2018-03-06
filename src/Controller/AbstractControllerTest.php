@@ -19,7 +19,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Mvc\Controller\PluginManager;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 

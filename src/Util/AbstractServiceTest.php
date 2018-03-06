@@ -66,7 +66,9 @@ abstract class AbstractServiceTest extends TestCase
 
         $config = ArrayUtils::merge(
         // Grabbing the full application + module configuration:
-            file_exists($configFile) ? include $configFile :
+            file_exists($configFile)
+                ? include $configFile
+                :
                 include __DIR__ . '/../../config/application.config.php',
             $defaultConfigOverrides,
             $this->configOverrides
@@ -107,7 +109,7 @@ abstract class AbstractServiceTest extends TestCase
     }
 
     /**
-     * @param string|null $entityClass
+     * @param string|null     $entityClass
      * @param MockObject|null $repositoryMock
      *
      * @return MockObject|EntityManager
