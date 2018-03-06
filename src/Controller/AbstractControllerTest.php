@@ -174,7 +174,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      */
     protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager = null)
     {
-        if (is_null($serviceManager)) {
+        if (\is_null($serviceManager)) {
             $serviceManager = $this->getApplicationServiceLocator();
         }
         $this->serviceBackup[$service] = $serviceManager->get($service);
@@ -201,7 +201,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     protected function resetService(string $service, ServiceManager $serviceManager = null)
     {
         if (array_key_exists($service, $this->serviceBackup)) {
-            if (is_null($serviceManager)) {
+            if (\is_null($serviceManager)) {
                 $serviceManager = $this->getApplicationServiceLocator();
             }
             $backup = &$this->serviceBackup[$service];

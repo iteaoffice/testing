@@ -19,9 +19,10 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.1",
-    "zendframework/zend-test": "~3.1",
-    "doctrine/doctrine-orm-module": "~1.1",
-    "zf-commons/zfc-user": "2.x-dev",
+    "zendframework/zend-test": "@stable",
+    "phpunit/phpunit": "^7.0.1",
+    "doctrine/doctrine-orm-module": "@stable",
+    "zf-commons/zfc-user": "@stable",
     "pdepend/pdepend": "@stable",
     "friendsofphp/php-cs-fixer": "@stable",
     "squizlabs/php_codesniffer": "@stable",
@@ -30,8 +31,7 @@
     "jakub-onderka/php-parallel-lint": "@stable",
     "jakub-onderka/php-console-highlighter": "@stable",
     "jield-webdev/bjy-authorize": "dev-master",
-    "roave/security-advisories": "dev-master",
-    "phpunit/php-file-iterator":"^1.4.2"
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {
