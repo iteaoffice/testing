@@ -19,7 +19,6 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.1",
-    "phpunit/phpunit": "^7.0.1",
     "doctrine/doctrine-orm-module": "^1.1.5",
     "zf-commons/zfc-user": "^3.0.0",
     "pdepend/pdepend": "@stable",
