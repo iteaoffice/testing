@@ -13,7 +13,6 @@ namespace Testing\Util;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use PHPUnit_Framework_TestCase;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
@@ -64,7 +63,9 @@ abstract class AbstractInputFilterTest extends TestCase
 
         $config = ArrayUtils::merge(
         // Grabbing the full application + module configuration:
-            file_exists($configFile) ? include $configFile :
+            file_exists($configFile)
+                ? include $configFile
+                :
                 include __DIR__ . '/../../config/application.config.php',
             $defaultConfigOverrides,
             $this->configOverrides
@@ -105,7 +106,7 @@ abstract class AbstractInputFilterTest extends TestCase
     }
 
     /**
-     * @param string|null $entityClass
+     * @param string|null     $entityClass
      * @param MockObject|null $repositoryMock
      *
      * @return MockObject|EntityManager
