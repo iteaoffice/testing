@@ -20,6 +20,7 @@
   "require": {
     "php": "^7.1",
     "zendframework/zend-test": "@stable",
+    "phpunit/phpunit": "^7.0.1",
     "doctrine/doctrine-orm-module": "@stable",
     "zf-commons/zfc-user": "@stable",
     "pdepend/pdepend": "@stable",
