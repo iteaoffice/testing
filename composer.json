@@ -19,6 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.1",
+    "zendframework/zend-test": "3.1.*",
     "doctrine/doctrine-orm-module": "^1.1.5",
     "zf-commons/zfc-user": "^3.0.0",
     "pdepend/pdepend": "@stable",
