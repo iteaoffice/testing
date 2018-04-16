@@ -11,6 +11,8 @@
 namespace Testing\Util;
 
 use Admin\Service\AdminService;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\ReflectionService;
 use Doctrine\ORM\EntityManager;
 use General\Email;
 use General\Service\EmailService;
@@ -89,59 +91,6 @@ abstract class AbstractServiceTest extends TestCase
     }
 
     /**
-     * @return ServiceManager
-     */
-    protected function getServiceManager(): ServiceManager
-    {
-        return $this->serviceManager;
-    }
-
-    /**
-     * @param ServiceManager $serviceManager
-     *
-     * @return AbstractServiceTest
-     */
-    protected function setServiceManager(ServiceManager $serviceManager): AbstractServiceTest
-    {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
-    }
-
-    /**
-     * @param string|null     $entityClass
-     * @param MockObject|null $repositoryMock
-     *
-     * @return MockObject|EntityManager
-     */
-    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
-    {
-        $mockRepository = (isset($entityClass) && isset($repositoryMock));
-
-        $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods = ['persist', 'flush', 'remove'];
-        $entityManagerMockBuilder->setMethods($mockMethods);
-        if ($mockRepository) { // Mock the getRepository method
-            $entityManagerMockBuilder->setMethods(array_merge($mockMethods, ['getRepository']));
-        }
-        $entityManagerMock = $entityManagerMockBuilder->getMock();
-
-        $entityManagerMock->expects($this->any())->method('persist');
-        $entityManagerMock->expects($this->any())->method('flush');
-        $entityManagerMock->expects($this->any())->method('remove');
-
-        // Mock custom entity repository when provided
-        if ($mockRepository) {
-            $entityManagerMock->expects($this->atLeastOnce())
-                ->method('getRepository')
-                ->with($this->equalTo($entityClass))
-                ->will($this->returnValue($repositoryMock));
-        }
-
-        return $entityManagerMock;
-    }
-
-    /**
      * @return MockObject|AdminService
      */
     public function getAdminServiceMock()
@@ -178,5 +127,159 @@ abstract class AbstractServiceTest extends TestCase
             ->will($this->returnValue('OK'));
 
         return $emailServiceMock;
+    }
+
+    /**
+     * @return ServiceManager
+     */
+    protected function getServiceManager(): ServiceManager
+    {
+        return $this->serviceManager;
+    }
+
+    /**
+     * @param ServiceManager $serviceManager
+     *
+     * @return AbstractServiceTest
+     */
+    protected function setServiceManager(ServiceManager $serviceManager): AbstractServiceTest
+    {
+        $this->serviceManager = $serviceManager;
+
+        return $this;
+    }
+
+    /**
+     * @param string|null     $entityClass
+     * @param MockObject|null $repositoryMock
+     *
+     * @return MockObject|EntityManager
+     */
+    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
+    {
+        $mockRepository = (isset($entityClass) && isset($repositoryMock));
+
+        $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
+        $mockMethods = ['persist', 'flush', 'remove', 'getClassMetadata'];
+        $entityManagerMockBuilder->setMethods($mockMethods);
+        if ($mockRepository) { // Mock the getRepository method
+            $entityManagerMockBuilder->setMethods(array_merge($mockMethods, ['getRepository']));
+        }
+        $entityManagerMock = $entityManagerMockBuilder->getMock();
+
+        $entityManagerMock->expects($this->any())->method('persist');
+        $entityManagerMock->expects($this->any())->method('flush');
+        $entityManagerMock->expects($this->any())->method('remove');
+
+        $metaData = new TestObjectMetadata();
+        $entityManagerMock->expects($this->any())->method('getClassMetadata')
+            ->will($this->returnValue($metaData));
+
+        // Mock custom entity repository when provided
+        if ($mockRepository) {
+            $entityManagerMock->expects($this->atLeastOnce())
+                ->method('getRepository')
+                ->with($this->equalTo($entityClass))
+                ->will($this->returnValue($repositoryMock));
+        }
+
+        return $entityManagerMock;
+    }
+}
+
+/**
+ * Class TestObjectMetadata
+ *
+ * @package Testing\Util
+ */
+class TestObjectMetadata implements ClassMetadata
+{
+
+    public function getAssociationMappedByTargetField($assocName)
+    {
+        $assoc = ['children' => 'parent'];
+        return $assoc[$assocName];
+    }
+
+    public function getAssociationNames()
+    {
+        return ['parent', 'children'];
+    }
+
+    public function getAssociationTargetClass($assocName)
+    {
+        return __NAMESPACE__ . '\TestObject';
+    }
+
+    public function getFieldNames()
+    {
+        return ['id', 'name'];
+    }
+
+    public function getIdentifier()
+    {
+        return ['id'];
+    }
+
+    public function getReflectionClass()
+    {
+        return new \ReflectionClass($this->getName());
+    }
+
+    public function getName()
+    {
+        return __NAMESPACE__ . '\TestObject';
+    }
+
+    public function getTypeOfField($fieldName)
+    {
+        $types = ['id' => 'integer', 'name' => 'string'];
+        return $types[$fieldName];
+    }
+
+    public function hasAssociation($fieldName)
+    {
+        return in_array($fieldName, ['parent', 'children']);
+    }
+
+    public function hasField($fieldName)
+    {
+        return in_array($fieldName, ['id', 'dateCreated', 'dateUpdated']);
+    }
+
+    public function isAssociationInverseSide($assocName)
+    {
+        return ($assocName === 'children');
+    }
+
+    public function isCollectionValuedAssociation($fieldName)
+    {
+        return ($fieldName === 'children');
+    }
+
+    public function isIdentifier($fieldName)
+    {
+        return $fieldName === 'id';
+    }
+
+    public function isSingleValuedAssociation($fieldName)
+    {
+        return $fieldName === 'parent';
+    }
+
+    public function getIdentifierValues($entity)
+    {
+    }
+
+    public function getIdentifierFieldNames()
+    {
+    }
+
+    public function initializeReflection(ReflectionService $reflService)
+    {
+    }
+
+    public function wakeupReflection(ReflectionService $reflService)
+    {
     }
 }
