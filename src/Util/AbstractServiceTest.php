@@ -96,7 +96,7 @@ abstract class AbstractServiceTest extends TestCase
     public function getAdminServiceMock()
     {
         //Mock the admin service
-        $adminServiceMock = $this->getMockBuilder(AdminService::class)
+        $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
             ->setMethods(['flushPermitsByEntityAndId',])->getMock();
         $adminServiceMock->expects($this->any())
             ->method('flushPermitsByEntityAndId')
