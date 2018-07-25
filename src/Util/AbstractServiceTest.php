@@ -110,21 +110,16 @@ abstract class AbstractServiceTest extends TestCase
      */
     public function getEmailServiceMock()
     {
-        $email = new Email([], []);
-
         //Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['create', 'setTemplate', 'send'])->getMock();
-        $emailServiceMock->expects($this->any())
-            ->method('create')
-            ->will($this->returnValue($email));
-        $emailServiceMock->expects($this->any())
-            ->method('setTemplate')
-            ->will($this->returnValue($emailServiceMock));
+            ->setMethods(['setWebInfo', 'send','setSender','addTo'])->getMock();
+        $emailServiceMock->expects($this->any())->method('setWebInfo');
+        $emailServiceMock->expects($this->any())->method('setSender');
+        $emailServiceMock->expects($this->any())->method('addTo');
         $emailServiceMock->expects($this->any())
             ->method('send')
-            ->will($this->returnValue('OK'));
+            ->will($this->returnValue(true));
 
         return $emailServiceMock;
     }
