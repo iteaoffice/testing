@@ -67,7 +67,7 @@ abstract class AbstractServiceTest extends TestCase
         $configFile = __DIR__ . '/../../../../../config/application.config.php';
 
         $config = ArrayUtils::merge(
-        // Grabbing the full application + module configuration:
+            // Grabbing the full application + module configuration:
             file_exists($configFile)
                 ? include $configFile
                 :
@@ -189,7 +189,6 @@ abstract class AbstractServiceTest extends TestCase
  */
 class TestObjectMetadata implements ClassMetadata
 {
-
     public function getAssociationMappedByTargetField($assocName)
     {
         $assoc = ['children' => 'parent'];

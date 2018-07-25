@@ -19,7 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.1",
-    "phpunit/phpunit": "@stable",
+    "zendframework/zend-test": "^3.2.0",
     "pdepend/pdepend": "@stable",
     "friendsofphp/php-cs-fixer": "@stable",
     "squizlabs/php_codesniffer": "@stable",
