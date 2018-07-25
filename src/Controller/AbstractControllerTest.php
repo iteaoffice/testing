@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Mvc\Controller\PluginManager;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
+use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
@@ -95,8 +96,10 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
 
         $this->setApplicationConfig(
             ArrayUtils::merge(
-                // Grabbing the full application + module configuration:
-                file_exists($configFile) ? include $configFile :
+            // Grabbing the full application + module configuration:
+                file_exists($configFile)
+                    ? include $configFile
+                    :
                     include __DIR__ . '/../../config/application.config.php',
                 $defaultConfigOverrides,
                 $this->configOverrides
@@ -129,8 +132,8 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      * Assert route access for controller
      *
      * @param string $route
-     * @param array $accessRoles
-     * @param int $expectedStatusCode
+     * @param array  $accessRoles
+     * @param int    $expectedStatusCode
      */
     public function assertRouteAccess(string $route, array $accessRoles = [], $expectedStatusCode = 200)
     {
@@ -167,13 +170,13 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     /**
      * Mock a service in the service manager, keeping a backup of the original instance
      *
-     * @param string $service
-     * @param object $mockInstance
+     * @param string         $service
+     * @param object         $mockInstance
      * @param ServiceManager $serviceManager
      */
     protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager = null)
     {
-        if (\is_null($serviceManager)) {
+        if (null === $serviceManager) {
             $serviceManager = $this->getApplicationServiceLocator();
         }
         $this->serviceBackup[$service] = $serviceManager->get($service);
@@ -191,16 +194,10 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         $this->resetService(BjyAuthorize::class);
     }
 
-    /**
-     * Reset a mocked object in the service manager to its original instance
-     *
-     * @param string $service
-     * @param ServiceManager $serviceManager
-     */
-    protected function resetService(string $service, ServiceManager $serviceManager = null)
+    protected function resetService(string $service, ServiceManager $serviceManager = null): void
     {
         if (array_key_exists($service, $this->serviceBackup)) {
-            if (\is_null($serviceManager)) {
+            if (null === $serviceManager) {
                 $serviceManager = $this->getApplicationServiceLocator();
             }
             $backup = &$this->serviceBackup[$service];

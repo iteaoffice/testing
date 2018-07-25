@@ -12,6 +12,7 @@ namespace Testing\Controller;
 
 use Admin\Entity\Access;
 use Admin\Entity\Role;
+use Admin\Entity\User;
 use Application\Provider\Identity\AuthenticationIdentityProvider;
 use BjyAuthorize\Provider\Identity\ProviderInterface;
 use BjyAuthorize\Service\Authorize as BjyAuthorize;
@@ -19,6 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Mvc\Controller\PluginManager;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
+use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
@@ -48,14 +50,7 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
      */
     private $serviceBackup = [];
 
-    /**
-     * Generate a dummy user with the specified access roles
-     *
-     * @param array $accessRoles
-     *
-     * @return user
-     */
-    public static function generateuserDummy(array $accessRoles = []): user
+    public static function generateUserDummy(array $accessRoles = []): User
     {
         $user = new User();
         $user->setId(1);
@@ -81,10 +76,6 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
      */
     public function setUp()
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
         // The module configuration should still be applicable for tests.
         // You can override configuration here with test case specific values,
         // such as sample view templates, path stacks, module_listener_options,
@@ -118,9 +109,9 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
     /**
      * @param array $configOverrides
      *
-     * @return AbstractControllerTest
+     * @return AbstractUserControllerTest
      */
-    public function setConfigOverrides(array $configOverrides): AbstractControllerTest
+    public function setConfigOverrides(array $configOverrides): AbstractUserControllerTest
     {
         $this->configOverrides = $configOverrides;
 
@@ -223,14 +214,7 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
         return $this->getApplication()->getMvcEvent()->getResult();
     }
 
-    /**
-     * Mock an identity
-     *
-     * @param user $user
-     *
-     * @return user
-     */
-    protected function mockIdentity(user $user): user
+    protected function mockIdentity(User $user): User
     {
         // Mock route access roles for BjyAuthorize
         $accessRoles = array_map(
