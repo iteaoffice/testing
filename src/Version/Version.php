@@ -20,5 +20,5 @@ namespace Testing\Version;
  */
 final class Version
 {
-    public const VERSION = '1.1.5';
+    public const VERSION = '1.2.0';
 }
