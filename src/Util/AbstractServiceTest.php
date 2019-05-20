@@ -76,8 +76,13 @@ abstract class AbstractServiceTest extends TestCase
             $this->configOverrides
         );
 
+        //Disable the error hero module
+        if (($key = array_search('ErrorHeroModule', $config['modules'], true)) !== false) {
+            unset($config['modules'][$key]);
+        }
+
         // Prepare the service manager
-        $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
+        $serviceManagerConfigArray = $config['service_manager'] ?? [];
         $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
@@ -100,43 +105,32 @@ abstract class AbstractServiceTest extends TestCase
             ->setMethods(['flushPermitsByEntityAndId',])->getMock();
         $adminServiceMock->expects($this->any())
             ->method('flushPermitsByEntityAndId')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         return $adminServiceMock;
     }
 
-    /**
-     * @return MockObject|EmailService
-     */
     public function getEmailServiceMock()
     {
         //Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['setWebInfo', 'send','setSender','addTo'])->getMock();
+            ->setMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
         $emailServiceMock->expects($this->any())->method('setWebInfo');
         $emailServiceMock->expects($this->any())->method('setSender');
         $emailServiceMock->expects($this->any())->method('addTo');
         $emailServiceMock->expects($this->any())
             ->method('send')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         return $emailServiceMock;
     }
 
-    /**
-     * @return ServiceManager
-     */
     protected function getServiceManager(): ServiceManager
     {
         return $this->serviceManager;
     }
 
-    /**
-     * @param ServiceManager $serviceManager
-     *
-     * @return AbstractServiceTest
-     */
     protected function setServiceManager(ServiceManager $serviceManager): AbstractServiceTest
     {
         $this->serviceManager = $serviceManager;
@@ -144,12 +138,6 @@ abstract class AbstractServiceTest extends TestCase
         return $this;
     }
 
-    /**
-     * @param string|null     $entityClass
-     * @param MockObject|null $repositoryMock
-     *
-     * @return MockObject|EntityManager
-     */
     protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
@@ -168,14 +156,14 @@ abstract class AbstractServiceTest extends TestCase
 
         $metaData = new TestObjectMetadata();
         $entityManagerMock->expects($this->any())->method('getClassMetadata')
-            ->will($this->returnValue($metaData));
+            ->willReturn($metaData);
 
         // Mock custom entity repository when provided
         if ($mockRepository) {
             $entityManagerMock->expects($this->atLeastOnce())
                 ->method('getRepository')
                 ->with($this->equalTo($entityClass))
-                ->will($this->returnValue($repositoryMock));
+                ->willReturn($repositoryMock);
         }
 
         return $entityManagerMock;
