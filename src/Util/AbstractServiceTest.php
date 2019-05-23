@@ -14,10 +14,9 @@ use Admin\Service\AdminService;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
 use Doctrine\ORM\EntityManager;
-use General\Email;
 use General\Service\EmailService;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
@@ -103,7 +102,7 @@ abstract class AbstractServiceTest extends TestCase
         //Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
             ->setMethods(['flushPermitsByEntityAndId',])->getMock();
-        $adminServiceMock->expects($this->any())
+        $adminServiceMock
             ->method('flushPermitsByEntityAndId')
             ->willReturn(true);
 
@@ -116,10 +115,10 @@ abstract class AbstractServiceTest extends TestCase
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
             ->setMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
-        $emailServiceMock->expects($this->any())->method('setWebInfo');
-        $emailServiceMock->expects($this->any())->method('setSender');
-        $emailServiceMock->expects($this->any())->method('addTo');
-        $emailServiceMock->expects($this->any())
+        $emailServiceMock->method('setWebInfo');
+        $emailServiceMock->method('setSender');
+        $emailServiceMock->method('addTo');
+        $emailServiceMock
             ->method('send')
             ->willReturn(true);
 
@@ -140,22 +139,23 @@ abstract class AbstractServiceTest extends TestCase
 
     protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
     {
-        $mockRepository = (isset($entityClass) && isset($repositoryMock));
+        $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods = ['persist', 'flush', 'remove', 'getClassMetadata'];
+        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata'];
         $entityManagerMockBuilder->setMethods($mockMethods);
         if ($mockRepository) { // Mock the getRepository method
             $entityManagerMockBuilder->setMethods(array_merge($mockMethods, ['getRepository']));
         }
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 
-        $entityManagerMock->expects($this->any())->method('persist');
-        $entityManagerMock->expects($this->any())->method('flush');
-        $entityManagerMock->expects($this->any())->method('remove');
+        $entityManagerMock->method('persist');
+        $entityManagerMock->method('flush');
+        $entityManagerMock->method('remove');
+        $entityManagerMock->method('contains');
 
         $metaData = new TestObjectMetadata();
-        $entityManagerMock->expects($this->any())->method('getClassMetadata')
+        $entityManagerMock->method('getClassMetadata')
             ->willReturn($metaData);
 
         // Mock custom entity repository when provided
