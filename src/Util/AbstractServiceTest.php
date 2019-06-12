@@ -51,7 +51,7 @@ abstract class AbstractServiceTest extends TestCase
     /**
      * General test setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
@@ -102,9 +102,7 @@ abstract class AbstractServiceTest extends TestCase
         //Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
             ->setMethods(['flushPermitsByEntityAndId',])->getMock();
-        $adminServiceMock
-            ->method('flushPermitsByEntityAndId')
-            ->willReturn(true);
+        $adminServiceMock->method('flushPermitsByEntityAndId');
 
         return $adminServiceMock;
     }

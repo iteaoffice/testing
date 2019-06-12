@@ -17,23 +17,13 @@ namespace Testing\Util;
  */
 trait ConfigOverridesTrait
 {
-
-    /**
-     * @var array
-     */
     private $configOverrides = [];
 
-    /**
-     * @return array
-     */
     protected function getConfigOverrides(): array
     {
         return $this->configOverrides;
     }
 
-    /**
-     * @param array $configOverrides
-     */
     protected function setConfigOverrides(array $configOverrides)
     {
         $this->configOverrides = $configOverrides;

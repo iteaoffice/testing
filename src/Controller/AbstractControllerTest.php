@@ -80,7 +80,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     /**
      * General test setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');

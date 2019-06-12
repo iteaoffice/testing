@@ -21,14 +21,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 trait GenerateContactTrait
 {
-
-    /**
-     * Generate a dummy contact with the specified access roles
-     *
-     * @param array $accessRoles
-     *
-     * @return Contact
-     */
     public static function generateContactDummy(array $accessRoles = []): Contact
     {
         $contact = new Contact();

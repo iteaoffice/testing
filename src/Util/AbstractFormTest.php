@@ -11,9 +11,8 @@
 namespace Testing\Util;
 
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use PHPUnit_Framework_TestCase;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
@@ -48,7 +47,7 @@ abstract class AbstractFormTest extends TestCase
     /**
      * General test setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
@@ -64,7 +63,9 @@ abstract class AbstractFormTest extends TestCase
 
         $config = ArrayUtils::merge(
             // Grabbing the full application + module configuration:
-            file_exists($configFile) ? include $configFile :
+            file_exists($configFile)
+                ? include $configFile
+                :
                 include __DIR__ . '/../../config/application.config.php',
             $defaultConfigOverrides,
             $this->configOverrides
@@ -105,12 +106,12 @@ abstract class AbstractFormTest extends TestCase
     }
 
     /**
-     * @param string|null $entityClass
+     * @param string|null     $entityClass
      * @param MockObject|null $repositoryMock
      *
      * @return MockObject
      */
-    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null)
+    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 
@@ -125,7 +126,7 @@ abstract class AbstractFormTest extends TestCase
             $entityManagerMock->expects($this->atLeastOnce())
                 ->method('getRepository')
                 ->with($this->equalTo($entityClass))
-                ->will($this->returnValue($repositoryMock));
+                ->willReturn($repositoryMock);
         }
 
         return $entityManagerMock;

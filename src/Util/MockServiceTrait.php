@@ -27,14 +27,7 @@ trait MockServiceTrait
      */
     private $serviceBackup = [];
 
-    /**
-     * Mock a service in the service manager, keeping a backup of the original instance
-     *
-     * @param string         $service
-     * @param object         $mockInstance
-     * @param ServiceManager $serviceManager
-     */
-    protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager)
+    protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager): void
     {
         $this->serviceBackup[$service] = $serviceManager->get($service);
         $serviceManager->setAllowOverride(true);
@@ -42,13 +35,7 @@ trait MockServiceTrait
         $serviceManager->setAllowOverride(false);
     }
 
-    /**
-     * Reset a mocked object in the service manager to its original instance
-     *
-     * @param string         $service
-     * @param ServiceManager $serviceManager
-     */
-    protected function resetService(string $service, ServiceManager $serviceManager)
+    protected function resetService(string $service, ServiceManager $serviceManager): void
     {
         if (array_key_exists($service, $this->serviceBackup)) {
             $backup = &$this->serviceBackup[$service];
