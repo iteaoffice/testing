@@ -34,6 +34,20 @@ abstract class AbstractServiceTest extends TestCase
     protected $serviceManager;
 
     /**
+     * @var bool
+     */
+    protected $setUpForEveryTest = true;
+
+    /**
+     * The module configuration should still be applicable for tests.
+     * You can override configuration here with test case specific values,
+     * such as sample view templates, path stacks, module_listener_options, etc.
+     *
+     * @var array
+     */
+    protected $defaultConfigOverrides = [];
+
+    /**
      * Include service mocking utils
      */
     use MockServiceTrait;
@@ -57,41 +71,43 @@ abstract class AbstractServiceTest extends TestCase
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
-        // The module configuration should still be applicable for tests.
-        // You can override configuration here with test case specific values,
-        // such as sample view templates, path stacks, module_listener_options,
-        // etc.
-        $defaultConfigOverrides = [];
-
-        $configFile = __DIR__ . '/../../../../../config/application.config.php';
-
-        $config = ArrayUtils::merge(
-            // Grabbing the full application + module configuration:
-            file_exists($configFile)
-                ? include $configFile
-                :
-                include __DIR__ . '/../../config/application.config.php',
-            $defaultConfigOverrides,
-            $this->configOverrides
-        );
-
-        //Disable the error hero module
-        if (($key = array_search('ErrorHeroModule', $config['modules'], true)) !== false) {
-            unset($config['modules'][$key]);
+        if (!defined('ITEAOFFICE_HOST')) {
+            define('ITEAOFFICE_HOST', 'test');
         }
 
-        // Prepare the service manager
-        $serviceManagerConfigArray = $config['service_manager'] ?? [];
-        $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
+        // As this is an expensive action, let the test files decide whether to re-use or create a new
+        // ServiceManager instance for every test
+        if ($this->setUpForEveryTest || ($this->serviceManager === null)) {
+            $configFile = __DIR__ . '/../../../../../config/application.config.php';
 
-        $serviceManager = new ServiceManager();
-        $serviceManagerConfig->configureServiceManager($serviceManager);
-        $serviceManager->setService('ApplicationConfig', $config);
+            $config = ArrayUtils::merge(
+            // Grabbing the full application + module configuration:
+                file_exists($configFile)
+                    ? include $configFile
+                    :
+                    include __DIR__ . '/../../config/application.config.php',
+                $this->defaultConfigOverrides,
+                $this->configOverrides
+            );
 
-        // Load modules
-        $serviceManager->get('ModuleManager')->loadModules();
+            // Disable the error hero module
+            if (($key = array_search('ErrorHeroModule', $config['modules'], true)) !== false) {
+                unset($config['modules'][$key]);
+            }
 
-        $this->setServiceManager($serviceManager);
+            // Prepare the service manager
+            $serviceManagerConfigArray = $config['service_manager'] ?? [];
+            $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
+
+            $serviceManager = new ServiceManager();
+            $serviceManagerConfig->configureServiceManager($serviceManager);
+            $serviceManager->setService('ApplicationConfig', $config);
+
+            // Load modules
+            $serviceManager->get('ModuleManager')->loadModules();
+
+            $this->setServiceManager($serviceManager);
+        }
     }
 
     /**
