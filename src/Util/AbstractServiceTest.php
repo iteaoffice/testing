@@ -17,9 +17,6 @@ use Doctrine\ORM\EntityManager;
 use General\Service\EmailService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Class AbstractServiceTest
@@ -28,25 +25,6 @@ use Zend\Stdlib\ArrayUtils;
  */
 abstract class AbstractServiceTest extends TestCase
 {
-    /**
-     * @var ServiceManager
-     */
-    protected $serviceManager;
-
-    /**
-     * @var bool
-     */
-    protected $setUpForEveryTest = true;
-
-    /**
-     * The module configuration should still be applicable for tests.
-     * You can override configuration here with test case specific values,
-     * such as sample view templates, path stacks, module_listener_options, etc.
-     *
-     * @var array
-     */
-    protected $defaultConfigOverrides = [];
-
     /**
      * Include service mocking utils
      */
@@ -62,10 +40,7 @@ abstract class AbstractServiceTest extends TestCase
      */
     use ConfigOverridesTrait;
 
-    /**
-     * General test setup
-     */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         if (!defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
@@ -73,40 +48,6 @@ abstract class AbstractServiceTest extends TestCase
 
         if (!defined('ITEAOFFICE_HOST')) {
             define('ITEAOFFICE_HOST', 'test');
-        }
-
-        // As this is an expensive action, let the test files decide whether to re-use or create a new
-        // ServiceManager instance for every test
-        if ($this->setUpForEveryTest || ($this->serviceManager === null)) {
-            $configFile = __DIR__ . '/../../../../../config/application.config.php';
-
-            $config = ArrayUtils::merge(
-            // Grabbing the full application + module configuration:
-                file_exists($configFile)
-                    ? include $configFile
-                    :
-                    include __DIR__ . '/../../config/application.config.php',
-                $this->defaultConfigOverrides,
-                $this->configOverrides
-            );
-
-            // Disable the error hero module
-            if (($key = array_search('ErrorHeroModule', $config['modules'], true)) !== false) {
-                unset($config['modules'][$key]);
-            }
-
-            // Prepare the service manager
-            $serviceManagerConfigArray = $config['service_manager'] ?? [];
-            $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
-
-            $serviceManager = new ServiceManager();
-            $serviceManagerConfig->configureServiceManager($serviceManager);
-            $serviceManager->setService('ApplicationConfig', $config);
-
-            // Load modules
-            $serviceManager->get('ModuleManager')->loadModules();
-
-            $this->setServiceManager($serviceManager);
         }
     }
 
@@ -139,28 +80,16 @@ abstract class AbstractServiceTest extends TestCase
         return $emailServiceMock;
     }
 
-    protected function getServiceManager(): ServiceManager
-    {
-        return $this->serviceManager;
-    }
-
-    protected function setServiceManager(ServiceManager $serviceManager): AbstractServiceTest
-    {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
-    }
-
     protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
     {
         $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
         $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata'];
-        $entityManagerMockBuilder->setMethods($mockMethods);
         if ($mockRepository) { // Mock the getRepository method
-            $entityManagerMockBuilder->setMethods(array_merge($mockMethods, ['getRepository']));
+            $mockMethods[] = 'getRepository';
         }
+        $entityManagerMockBuilder->setMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 
         $entityManagerMock->method('persist');
