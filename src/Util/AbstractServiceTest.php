@@ -14,6 +14,7 @@ use Admin\Service\AdminService;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use General\Service\EmailService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -80,6 +81,11 @@ abstract class AbstractServiceTest extends TestCase
         return $emailServiceMock;
     }
 
+    /**
+     * @param string|null $entityClass
+     * @param null $repositoryMock
+     * @return MockObject|EntityManagerInterface
+     */
     protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null)
     {
         $mockRepository = isset($entityClass, $repositoryMock);
