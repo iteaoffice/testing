@@ -13,7 +13,7 @@ namespace Testing\Controller;
 use Admin\Entity\Access;
 use Admin\Entity\Role;
 use Admin\Entity\User;
-use Application\Provider\Identity\AuthenticationIdentityProvider;
+use Contact\Provider\Identity\AuthenticationIdentityProvider;
 use BjyAuthorize\Provider\Identity\ProviderInterface;
 use BjyAuthorize\Service\Authorize as BjyAuthorize;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -143,7 +143,7 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
         // Mock route roles for BjyAuthorize
         $routeAuthMock = $this->getMockBuilder(AuthenticationIdentityProvider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getIdentityRoles'])
+            ->onlyMethods(['getIdentityRoles'])
             ->getMock();
 
         $routeAuthMock->expects($this->any())
@@ -227,7 +227,7 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
 
         // Mock ZfcUserAuthentication controller plugin
         $authPluginMock = $this->getMockBuilder(ZfcUserAuthentication::class)
-            ->setMethods(['getIdentity', 'hasIdentity'])
+            ->onlyMethods(['getIdentity', 'hasIdentity'])
             ->getMock();
 
         $authPluginMock->expects($this->any())

@@ -59,7 +59,7 @@ abstract class AbstractServiceTest extends TestCase
     {
         //Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
-            ->setMethods(['flushPermitsByEntityAndId',])->getMock();
+            ->onlyMethods(['flushPermitsByEntityAndId',])->getMock();
         $adminServiceMock->method('flushPermitsByEntityAndId');
 
         return $adminServiceMock;
@@ -70,7 +70,7 @@ abstract class AbstractServiceTest extends TestCase
         //Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->setMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
+            ->onlyMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
         $emailServiceMock->method('setWebInfo');
         $emailServiceMock->method('setSender');
         $emailServiceMock->method('addTo');
@@ -95,7 +95,7 @@ abstract class AbstractServiceTest extends TestCase
         if ($mockRepository) { // Mock the getRepository method
             $mockMethods[] = 'getRepository';
         }
-        $entityManagerMockBuilder->setMethods($mockMethods);
+        $entityManagerMockBuilder->onlyMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 
         $entityManagerMock->method('persist');
