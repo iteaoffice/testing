@@ -117,7 +117,7 @@ abstract class AbstractFormTest extends TestCase
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
         if ($mockRepository) { // Just mock the getRepository method
-            $entityManagerMockBuilder->setMethods(['getRepository']);
+            $entityManagerMockBuilder->onlyMethods(['getRepository']);
         }
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 

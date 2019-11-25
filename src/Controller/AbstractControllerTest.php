@@ -153,7 +153,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         // Mock route roles for BjyAuthorize
         $routeAuthMock = $this->getMockBuilder(AuthenticationIdentityProvider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getIdentityRoles'])
+            ->onlyMethods(['getIdentityRoles'])
             ->getMock();
 
         $routeAuthMock->expects($this->any())
@@ -238,7 +238,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
 
         // Mock ZfcUserAuthentication controller plugin
         $authPluginMock = $this->getMockBuilder(ZfcUserAuthentication::class)
-            ->setMethods(['getIdentity', 'hasIdentity'])
+            ->onlyMethods(['getIdentity', 'hasIdentity'])
             ->getMock();
 
         $authPluginMock->expects($this->any())
