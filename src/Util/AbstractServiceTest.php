@@ -13,6 +13,7 @@ namespace Testing\Util;
 use Admin\Service\AdminService;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use General\Service\EmailService;
@@ -95,7 +96,7 @@ abstract class AbstractServiceTest extends TestCase
         if ($mockRepository) { // Mock the getRepository method
             $mockMethods[] = 'getRepository';
         }
-        $entityManagerMockBuilder->setMethods($mockMethods);
+        $entityManagerMockBuilder->onlyMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();
 
         $entityManagerMock->method('persist');
