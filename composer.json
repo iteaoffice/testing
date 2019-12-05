@@ -42,5 +42,19 @@
     "branch-alias": {
       "dev-master": "1.2.x-dev"
     }
+  },
+  "scripts": {
+    "check": [
+      "@php-lint",
+      "@cs"
+    ],
+    "fix": [
+      "@cbf",
+      "@cs-fix"
+    ],
+    "php-lint": "./vendor/bin/parallel-lint module",
+    "cs": "./vendor/bin/phpcs -n -p --standard=PSR2 --extensions=php,twig src",
+    "cbf": "./vendor/bin/phpcbf src --standard=PSR2",
+    "cs-fix": "./vendor/bin/php-cs-fixer fix -v src"
   }
 }
