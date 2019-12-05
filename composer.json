@@ -18,7 +18,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.1",
+    "php": ">7.2",
     "zendframework/zend-test": "^3.2.0",
     "zendframework/zend-mvc": "^3.0.1",
     "zendframework/zend-mvc-console": "^1.2.0",
@@ -31,7 +31,7 @@
     "doctrine/data-fixtures": "@stable",
     "jakub-onderka/php-parallel-lint": "@stable",
     "jakub-onderka/php-console-highlighter": "@stable",
-    "phpstan/phpstan": "0.11.*"
+    "phpstan/phpstan": "0.12.*"
   },
   "autoload": {
     "psr-4": {
