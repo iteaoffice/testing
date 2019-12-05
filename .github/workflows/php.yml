@@ -33,8 +33,8 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Run check suite
+        run: composer check
+
       - name: Run fix suite
         run: composer fix
-
-      - name: Run test suite
-        run: composer test
