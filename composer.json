@@ -19,7 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": "~7.2 || ~7.3 || ~7.4",
-    "zendframework/zend-test": "^3.2.0",
+    "zendframework/zend-test": "3.3.*",
     "zendframework/zend-mvc": "^3.0.1",
     "zendframework/zend-mvc-console": "^1.2.0",
     "zendframework/zend-mvc-plugins": "^1.0.1",
