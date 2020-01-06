@@ -16,11 +16,11 @@ use BjyAuthorize\Service\Authorize as BjyAuthorize;
 use Contact\Entity\Contact;
 use Contact\Provider\Identity\AuthenticationIdentityProvider;
 use Doctrine\Common\Collections\ArrayCollection;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Laminas\View\Model\ViewModel;
 use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
 /**

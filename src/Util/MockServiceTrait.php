@@ -10,7 +10,7 @@
 
 namespace Testing\Util;
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Class MockServiceTrait

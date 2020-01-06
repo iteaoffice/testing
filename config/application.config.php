@@ -4,11 +4,11 @@
  */
 return [
     'modules'                 => [
-        'Zend\Router',
-        'Zend\Form',
-        'Zend\Navigation',
-        'Zend\Mvc\Console',
-        'Zend\Mvc\Plugin\FlashMessenger'
+        'Laminas\Router',
+        'Laminas\Form',
+        'Laminas\Navigation',
+        'Laminas\Mvc\Console',
+        'Laminas\Mvc\Plugin\FlashMessenger'
     ],
     'module_listener_options' => [
         'config_glob_paths'        => [
