@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
@@ -16,5 +15,5 @@ namespace Testing\Version;
  */
 final class Version
 {
-    public const VERSION = '1.2.0';
+    public const VERSION = '2.0.0';
 }
