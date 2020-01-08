@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ITEA Office all rights reserved
  *
@@ -11,11 +12,11 @@
 namespace Testing\Util;
 
 use Doctrine\ORM\EntityManager;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayUtils;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractServiceTest
@@ -24,11 +25,6 @@ use Laminas\Stdlib\ArrayUtils;
  */
 abstract class AbstractFormTest extends TestCase
 {
-    /**
-     * @var ServiceManager
-     */
-    protected $serviceManager;
-
     /**
      * Include service mocking utils
      */
@@ -43,6 +39,11 @@ abstract class AbstractFormTest extends TestCase
      * Override default config
      */
     use ConfigOverridesTrait;
+
+    /**
+     * @var ServiceManager
+     */
+    protected $serviceManager;
 
     /**
      * General test setup
@@ -62,7 +63,7 @@ abstract class AbstractFormTest extends TestCase
         $configFile = __DIR__ . '/../../../../../config/application.config.php';
 
         $config = ArrayUtils::merge(
-            // Grabbing the full application + module configuration:
+        // Grabbing the full application + module configuration:
             file_exists($configFile)
                 ? include $configFile
                 :
@@ -106,7 +107,7 @@ abstract class AbstractFormTest extends TestCase
     }
 
     /**
-     * @param string|null     $entityClass
+     * @param string|null $entityClass
      * @param MockObject|null $repositoryMock
      *
      * @return MockObject

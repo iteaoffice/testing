@@ -1,4 +1,5 @@
 <?php
+
 namespace Testing\Util;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
