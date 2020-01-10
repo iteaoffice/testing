@@ -31,8 +31,7 @@
     "doctrine/data-fixtures": "@stable",
     "jakub-onderka/php-parallel-lint": "@stable",
     "jakub-onderka/php-console-highlighter": "@stable",
-    "phpstan/phpstan": "0.12.*",
-    "laminas/laminas-dependency-plugin": "^0.2"
+    "phpstan/phpstan": "0.12.*"
   },
   "autoload": {
     "psr-4": {
