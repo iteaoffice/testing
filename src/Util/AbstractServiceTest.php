@@ -41,11 +41,11 @@ abstract class AbstractServiceTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
+        if (! defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
-        if (!defined('ITEAOFFICE_HOST')) {
+        if (! defined('ITEAOFFICE_HOST')) {
             define('ITEAOFFICE_HOST', 'test');
         }
     }

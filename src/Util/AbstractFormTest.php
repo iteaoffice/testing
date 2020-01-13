@@ -50,7 +50,7 @@ abstract class AbstractFormTest extends TestCase
      */
     public function setUp(): void
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
+        if (! defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
