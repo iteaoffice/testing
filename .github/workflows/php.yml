@@ -33,6 +33,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Dump the autoloader
+        run: composer dump-autoload
+
       - name: Run check suite
         run: composer check
 

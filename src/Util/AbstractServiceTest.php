@@ -15,7 +15,6 @@ use Admin\Entity\Permit\Entity;
 use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
 use General\Service\EmailService;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -42,28 +41,29 @@ abstract class AbstractServiceTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
+        if (! defined('ITEAOFFICE_ENVIRONMENT')) {
             define('ITEAOFFICE_ENVIRONMENT', 'test');
         }
 
-        if (!defined('ITEAOFFICE_HOST')) {
+        if (! defined('ITEAOFFICE_HOST')) {
             define('ITEAOFFICE_HOST', 'test');
         }
     }
 
-    public function getAdminServiceMock(): MockObject
+    public function getAdminServiceMock(): AdminService
     {
-        //Mock the admin service
+        // Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
             ->onlyMethods(['flushPermitsByEntityAndId',])->getMock();
         $adminServiceMock->method('flushPermitsByEntityAndId');
 
+        /** @var AdminService $adminServiceMock */
         return $adminServiceMock;
     }
 
-    public function getEmailServiceMock(): MockObject
+    public function getEmailServiceMock(): EmailService
     {
-        //Mock the email service
+        // Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
@@ -74,10 +74,11 @@ abstract class AbstractServiceTest extends TestCase
             ->method('send')
             ->willReturn(true);
 
+        /** @var EmailService $emailServiceMock */
         return $emailServiceMock;
     }
 
-    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null): MockObject
+    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null): EntityManager
     {
         $mockRepository = isset($entityClass, $repositoryMock);
 
@@ -91,7 +92,6 @@ abstract class AbstractServiceTest extends TestCase
         $entityManagerMock->method('flush');
         $entityManagerMock->method('remove');
         $entityManagerMock->method('contains');
-
 
         $entityRepositoryMock = $this->getMockBuilder(\Admin\Repository\Permit\Entity::class)
             ->disableOriginalConstructor()
@@ -117,7 +117,7 @@ abstract class AbstractServiceTest extends TestCase
         $entityManagerMock->method('getClassMetadata')
             ->willReturn($metaData);
 
-
+        /** @var EntityManager $entityManagerMock */
         return $entityManagerMock;
     }
 }
