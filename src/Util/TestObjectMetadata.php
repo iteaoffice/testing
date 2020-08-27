@@ -2,8 +2,8 @@
 
 namespace Testing\Util;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\ReflectionService;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ReflectionService;
 
 /**
  * Class TestObjectMetadata
