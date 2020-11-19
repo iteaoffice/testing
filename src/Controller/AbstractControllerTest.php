@@ -21,8 +21,8 @@ use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Laminas\View\Helper\Identity;
 use Laminas\View\Model\ViewModel;
-use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
 /**
  * Class AbstractControllerTest
@@ -230,29 +230,21 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     {
         // Mock route access roles for BjyAuthorize
         $accessRoles = array_map(
-            function (Access $access) {
+            static function (Access $access) {
                 return $access->getAccess();
             },
             $contact->getAccess()->toArray()
         );
         $this->mockAccessRoles($accessRoles);
 
-        // Mock ZfcUserAuthentication controller plugin
-        $authPluginMock = $this->getMockBuilder(ZfcUserAuthentication::class)
-            ->onlyMethods(['getIdentity', 'hasIdentity'])
+        // Mock Identity controller plugin
+        $identityMock = $this->getMockBuilder(Identity::class)
             ->getMock();
 
-        $authPluginMock->expects($this->any())
-            ->method('getIdentity')
-            ->will($this->returnValue($contact));
-
-        $authPluginMock->expects($this->any())
-            ->method('hasIdentity')
-            ->will($this->returnValue(true));
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');
-        $this->mockService(ZfcUserAuthentication::class, $authPluginMock, $pluginManager);
+        $this->mockService(Identity::class, $identityMock, $pluginManager);
 
         return $contact;
     }
@@ -267,6 +259,6 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');
-        $this->resetService(ZfcUserAuthentication::class, $pluginManager);
+        $this->resetService(Identity::class, $pluginManager);
     }
 }

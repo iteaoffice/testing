@@ -22,8 +22,8 @@ use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Laminas\View\Helper\Identity;
 use Laminas\View\Model\ViewModel;
-use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
 /**
  * Class AbstractControllerTest
@@ -226,22 +226,12 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
         );
         $this->mockAccessRoles($accessRoles);
 
-        // Mock ZfcUserAuthentication controller plugin
-        $authPluginMock = $this->getMockBuilder(ZfcUserAuthentication::class)
-            ->onlyMethods(['getIdentity', 'hasIdentity'])
-            ->getMock();
-
-        $authPluginMock->expects($this->any())
-            ->method('getIdentity')
-            ->will($this->returnValue($user));
-
-        $authPluginMock->expects($this->any())
-            ->method('hasIdentity')
-            ->will($this->returnValue(true));
+        // Mock Identity controller plugin
+        $authPluginMock = $this->getMockBuilder(Identity::class)->getMock();
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');
-        $this->mockService(ZfcUserAuthentication::class, $authPluginMock, $pluginManager);
+        $this->mockService(Identity::class, $authPluginMock, $pluginManager);
 
         return $user;
     }
@@ -256,6 +246,6 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');
-        $this->resetService(ZfcUserAuthentication::class, $pluginManager);
+        $this->resetService(Identity::class, $pluginManager);
     }
 }
