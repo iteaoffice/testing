@@ -3,10 +3,9 @@
 /**
  * ITEA Office all rights reserved
  *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
+ * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
+ * @copyright   Copyright (c) 2021 ITEA Office (https://itea3.org)
+ * @license     https://itea3.org/license.txt proprietary
  */
 
 namespace Testing\Util;
@@ -66,12 +65,10 @@ abstract class AbstractServiceTest extends TestCase
         // Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
-        $emailServiceMock->method('setWebInfo');
-        $emailServiceMock->method('setSender');
-        $emailServiceMock->method('addTo');
+            ->onlyMethods(['createNewWebInfoEmailBuilder', 'sendBuilder'])->getMock();
+        $emailServiceMock->method('createNewWebInfoEmailBuilder');
         $emailServiceMock
-            ->method('send')
+            ->method('sendBuilder')
             ->willReturn(true);
 
         /** @var EmailService $emailServiceMock */

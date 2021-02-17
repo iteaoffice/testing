@@ -3,10 +3,9 @@
 /**
  * ITEA Office all rights reserved
  *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
+ * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
+ * @copyright   Copyright (c) 2021 ITEA Office (https://itea3.org)
+ * @license     https://itea3.org/license.txt proprietary
  */
 
 namespace Testing\Util;
@@ -43,7 +42,7 @@ abstract class AbstractFormTest extends TestCase
     /**
      * @var ServiceManager
      */
-    protected $serviceManager;
+    protected ServiceManager $serviceManager;
 
     /**
      * General test setup
@@ -74,7 +73,7 @@ abstract class AbstractFormTest extends TestCase
 
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
-        $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
+        $serviceManagerConfig      = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
         $serviceManagerConfig->configureServiceManager($serviceManager);
@@ -110,7 +109,7 @@ abstract class AbstractFormTest extends TestCase
      * @param string|null $entityClass
      * @param MockObject|null $repositoryMock
      *
-     * @return MockObject
+     * @return MockObject|EntityManager
      */
     protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
     {
@@ -124,9 +123,9 @@ abstract class AbstractFormTest extends TestCase
 
         // Mock custom entity repository when provided
         if ($mockRepository) {
-            $entityManagerMock->expects($this->atLeastOnce())
+            $entityManagerMock->expects(self::atLeastOnce())
                 ->method('getRepository')
-                ->with($this->equalTo($entityClass))
+                ->with(self::equalTo($entityClass))
                 ->willReturn($repositoryMock);
         }
 
