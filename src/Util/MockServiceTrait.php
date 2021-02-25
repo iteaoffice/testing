@@ -19,7 +19,6 @@ use Laminas\ServiceManager\ServiceManager;
  */
 trait MockServiceTrait
 {
-
     /**
      * Store original objects/services here to reset them later
      *
