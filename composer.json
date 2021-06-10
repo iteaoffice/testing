@@ -20,7 +20,7 @@
   "require": {
     "php": "^7.4 || ^8.0",
     "laminas/laminas-test": "^3.5",
-    "laminas/laminas-mvc": "^4.0",
+    "laminas/laminas-mvc": "^3.2",
     "laminas/laminas-cli": "^1.2",
     "laminas/laminas-mvc-plugins": "^1.2",
     "laminas/laminas-navigation": "^2.12",
