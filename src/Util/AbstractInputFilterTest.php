@@ -80,7 +80,7 @@ abstract class AbstractInputFilterTest extends TestCase
         $serviceManager->setService('ApplicationConfig', $config);
 
         // Load modules
-        $serviceManager->get('ModuleManager')->loadModules();
+       // $serviceManager->get('ModuleManager')->loadModules();
 
         $this->setServiceManager($serviceManager);
     }

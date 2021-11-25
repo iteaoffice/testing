@@ -45,7 +45,7 @@ abstract class AbstractServiceTest extends TestCase
         }
 
         if (! defined('ITEAOFFICE_HOST')) {
-            define('ITEAOFFICE_HOST', 'test');
+            define('ITEAOFFICE_HOST', 'itea');
         }
     }
 
