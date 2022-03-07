@@ -16,7 +16,6 @@
       "email": "johan.van.der.heide@itea4.org"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
     "php": "^8.0 || ^8.1",
     "laminas/laminas-test": "^4.0",
@@ -30,7 +29,7 @@
     "phpunit/phpunit": "^9",
     "vimeo/psalm": "^4.12",
     "jetbrains/phpstorm-attributes": "^1.0",
-    "laminas/laminas-coding-standard": "^2.4"
+    "laminas/laminas-coding-standard": "^2.3"
   },
   "autoload": {
     "psr-4": {
