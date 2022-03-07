@@ -1,43 +1,65 @@
-name: Testing Test suite
+name: Code Quality tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
-  run:
-    runs-on: ubuntu-latest
+  build:
     strategy:
       matrix:
-        php-versions: [ '8.0', '8.1']
-    name: PHP ${{ matrix.php-versions }} Test on Ubuntu
+        dependencies:
+          - "locked"
+          - "highest"
+        php-version:
+          - "8.0"
+          - "8.1"
+          - "8.2"
+        operating-system:
+          - "ubuntu-latest"
+
+    runs-on: ${{ matrix.operating-system }}
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v1
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: "${{ matrix.php-version }}"
+          ini-values: memory_limit=-1
+          extensions: mbstring, intl, zip, soap, gd
           coverage: xdebug #optional, setup coverage driver
+          tools: composer:v2
 
-      - name: Check PHP Version
-        run: php -v
+      - name: "Cache dependencies"
+        uses: "actions/cache@v2"
+        with:
+          path: |
+            ~/.composer/cache
+            vendor
+          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
+          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
 
-      - name: Check Composer Version
-        run: composer -V
+      - name: "Install highest dependencies"
+        if: ${{ matrix.dependencies == 'highest' }}
+        run: "composer update --no-interaction --no-progress --no-suggest"
 
-      - name: Check PHP Extensions
-        run: php -m
+      - name: "Install locked dependencies"
+        if: ${{ matrix.dependencies == 'locked' }}
+        run: "composer install --no-interaction --no-progress --no-suggest"
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+      - name: Run Lint Checker suite
+        run: composer php-lint
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Run PHP Stan
+        run: composer phpstan
 
-      - name: Dump the autoloader
-        run: composer dump-autoload
-
-      - name: Run check suite
-        run: composer check
-
-      - name: Run fix suite
-        run: composer fix
+      - name: Run test suite
+        run: composer test
