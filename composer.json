@@ -19,7 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^8.0 || ^8.1",
-    "laminas/laminas-test": "^4.1",
+    "laminas/laminas-test": "^4.0",
     "pdepend/pdepend": "^2.10",
     "friendsofphp/php-cs-fixer": "^3.6",
     "squizlabs/php_codesniffer": "^3.6",
