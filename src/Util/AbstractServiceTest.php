@@ -92,10 +92,9 @@ abstract class AbstractServiceTest extends TestCase
 
         $entityRepositoryMock = $this->getMockBuilder(\Admin\Repository\Permit\Entity::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['flushPermitsByEntityAndId','findOneBy'])
+            ->onlyMethods(['findOneBy'])
             ->getMock();
 
-        $entityRepositoryMock->method('flushPermitsByEntityAndId');
         $entityRepositoryMock->method('findOneBy')->willReturn(new Entity());
 
         $map = [
