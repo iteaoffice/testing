@@ -1,13 +1,5 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2021 ITEA Office (https://itea3.org)
- * @license     https://itea3.org/license.txt proprietary
- */
-
 namespace Testing\Util;
 
 use Admin\Entity\Permit\Entity;
@@ -38,22 +30,11 @@ abstract class AbstractServiceTest extends TestCase
      */
     use ConfigOverridesTrait;
 
-    public static function setUpBeforeClass(): void
-    {
-        if (! defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
-        if (! defined('ITEAOFFICE_HOST')) {
-            define('ITEAOFFICE_HOST', 'itea');
-        }
-    }
-
     public function getAdminServiceMock(): AdminService
     {
         // Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
-            ->onlyMethods(['flushPermitsByEntityAndId',])->getMock();
+            ->onlyMethods(['flushPermitsByEntityAndId'])->getMock();
         $adminServiceMock->method('flushPermitsByEntityAndId');
 
         /** @var AdminService $adminServiceMock */
@@ -80,7 +61,7 @@ abstract class AbstractServiceTest extends TestCase
         $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata','getRepository'];
+        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
 
         $entityManagerMockBuilder->onlyMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();

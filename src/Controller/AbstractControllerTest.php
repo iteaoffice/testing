@@ -74,10 +74,6 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      */
     public function setUp(): void
     {
-        if (! defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
         // The module configuration should still be applicable for tests.
         // You can override configuration here with test case specific values,
         // such as sample view templates, path stacks, module_listener_options,

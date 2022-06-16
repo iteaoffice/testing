@@ -1,13 +1,5 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2021 ITEA Office (https://itea3.org)
- * @license     https://itea3.org/license.txt proprietary
- */
-
 namespace Testing\Util;
 
 use Doctrine\ORM\EntityManager;
@@ -49,10 +41,6 @@ abstract class AbstractFormTest extends TestCase
      */
     public function setUp(): void
     {
-        if (! defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
         // The module configuration should still be applicable for tests.
         // You can override configuration here with test case specific values,
         // such as sample view templates, path stacks, module_listener_options,
