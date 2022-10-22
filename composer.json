@@ -44,7 +44,6 @@
   },
   "replace": {
     "laminas/laminas-cache-storage-adapter-apc": "*",
-    "laminas/laminas-cache-storage-adapter-apcu": "*",
     "laminas/laminas-cache-storage-adapter-blackhole": "*",
     "laminas/laminas-cache-storage-adapter-dba": "*",
     "laminas/laminas-cache-storage-adapter-ext-mongodb": "*",
