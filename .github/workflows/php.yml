@@ -15,19 +15,19 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - "locked"
-          - "highest"
+          - locked
+          - highest
         php-version:
-          - "8.0"
-          - "8.1"
-          - "8.2"
+          - 8.0
+          - 8.1
+          - 8.2
         operating-system:
-          - "ubuntu-latest"
+          - ubuntu-latest
 
     runs-on: ${{ matrix.operating-system }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
@@ -38,7 +38,7 @@ jobs:
           tools: composer:v2
 
       - name: "Cache dependencies"
-        uses: "actions/cache@v2"
+        uses: actions/cache@v3
         with:
           path: |
             ~/.composer/cache
