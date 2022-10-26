@@ -1,29 +1,20 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
- */
-
 namespace Testing\Controller;
 
 use Admin\Entity\Access;
 use Admin\Entity\Role;
 use Admin\Entity\User;
-use Contact\Provider\Identity\AuthenticationIdentityProvider;
 use BjyAuthorize\Provider\Identity\ProviderInterface;
 use BjyAuthorize\Service\Authorize as BjyAuthorize;
+use Contact\Provider\Identity\AuthenticationIdentityProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Laminas\View\Helper\Identity;
 use Laminas\View\Model\ViewModel;
-use ZfcUser\Controller\Plugin\ZfcUserAuthentication;
 
 /**
  * Class AbstractControllerTest
@@ -42,14 +33,14 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
      *
      * @var array
      */
-    protected $configOverrides = [];
+    protected array $configOverrides = [];
 
     /**
      * Store original objects/services here to reset them later
      *
      * @var array
      */
-    private $serviceBackup = [];
+    private array $serviceBackup = [];
 
     public static function generateUserDummy(array $accessRoles = []): User
     {
@@ -87,7 +78,7 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
 
         $this->setApplicationConfig(
             ArrayUtils::merge(
-                // Grabbing the full application + module configuration:
+            // Grabbing the full application + module configuration:
                 file_exists($configFile)
                     ? include $configFile
                     :
@@ -123,8 +114,8 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
      * Assert route access for controller
      *
      * @param string $route
-     * @param array  $accessRoles
-     * @param int    $expectedStatusCode
+     * @param array $accessRoles
+     * @param int $expectedStatusCode
      */
     public function assertRouteAccess(string $route, array $accessRoles = [], $expectedStatusCode = 200)
     {
@@ -161,8 +152,8 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
     /**
      * Mock a service in the service manager, keeping a backup of the original instance
      *
-     * @param string         $service
-     * @param object         $mockInstance
+     * @param string $service
+     * @param object $mockInstance
      * @param ServiceManager $serviceManager
      */
     protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager = null)
@@ -188,7 +179,7 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
     /**
      * Reset a mocked object in the service manager to its original instance
      *
-     * @param string         $service
+     * @param string $service
      * @param ServiceManager $serviceManager
      */
     protected function resetService(string $service, ServiceManager $serviceManager = null)
@@ -226,22 +217,12 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
         );
         $this->mockAccessRoles($accessRoles);
 
-        // Mock ZfcUserAuthentication controller plugin
-        $authPluginMock = $this->getMockBuilder(ZfcUserAuthentication::class)
-            ->onlyMethods(['getIdentity', 'hasIdentity'])
-            ->getMock();
-
-        $authPluginMock->expects($this->any())
-            ->method('getIdentity')
-            ->will($this->returnValue($user));
-
-        $authPluginMock->expects($this->any())
-            ->method('hasIdentity')
-            ->will($this->returnValue(true));
+        // Mock Identity controller plugin
+        $authPluginMock = $this->getMockBuilder(Identity::class)->getMock();
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');
-        $this->mockService(ZfcUserAuthentication::class, $authPluginMock, $pluginManager);
+        $this->mockService(Identity::class, $authPluginMock, $pluginManager);
 
         return $user;
     }
@@ -256,6 +237,6 @@ abstract class AbstractUserControllerTest extends AbstractHttpControllerTestCase
 
         /** @var PluginManager $pluginManager */
         $pluginManager = $this->getApplicationServiceLocator()->get('ControllerPluginManager');
-        $this->resetService(ZfcUserAuthentication::class, $pluginManager);
+        $this->resetService(Identity::class, $pluginManager);
     }
 }

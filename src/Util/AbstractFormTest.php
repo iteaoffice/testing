@@ -1,14 +1,5 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
- */
-
 namespace Testing\Util;
 
 use Doctrine\ORM\EntityManager;
@@ -43,17 +34,13 @@ abstract class AbstractFormTest extends TestCase
     /**
      * @var ServiceManager
      */
-    protected $serviceManager;
+    protected ServiceManager $serviceManager;
 
     /**
      * General test setup
      */
     public function setUp(): void
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
         // The module configuration should still be applicable for tests.
         // You can override configuration here with test case specific values,
         // such as sample view templates, path stacks, module_listener_options,
@@ -74,7 +61,7 @@ abstract class AbstractFormTest extends TestCase
 
         // Prepare the service manager
         $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
-        $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
+        $serviceManagerConfig      = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
         $serviceManagerConfig->configureServiceManager($serviceManager);
@@ -110,7 +97,7 @@ abstract class AbstractFormTest extends TestCase
      * @param string|null $entityClass
      * @param MockObject|null $repositoryMock
      *
-     * @return MockObject
+     * @return MockObject|EntityManager
      */
     protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
     {
@@ -124,9 +111,9 @@ abstract class AbstractFormTest extends TestCase
 
         // Mock custom entity repository when provided
         if ($mockRepository) {
-            $entityManagerMock->expects($this->atLeastOnce())
+            $entityManagerMock->expects(self::atLeastOnce())
                 ->method('getRepository')
-                ->with($this->equalTo($entityClass))
+                ->with(self::equalTo($entityClass))
                 ->willReturn($repositoryMock);
         }
 

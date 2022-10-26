@@ -1,14 +1,5 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
- */
-
 namespace Testing\Util;
 
 use Doctrine\ORM\EntityManager;
@@ -40,20 +31,13 @@ abstract class AbstractInputFilterTest extends TestCase
      */
     use ConfigOverridesTrait;
 
-    /**
-     * @var ServiceManager
-     */
-    protected $serviceManager;
+    protected ServiceManager $serviceManager;
 
     /**
      * General test setup
      */
     public function setUp(): void
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
         // The module configuration should still be applicable for tests.
         // You can override configuration here with test case specific values,
         // such as sample view templates, path stacks, module_listener_options,
@@ -73,7 +57,7 @@ abstract class AbstractInputFilterTest extends TestCase
         );
 
         // Prepare the service manager
-        $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
+        $serviceManagerConfigArray = $config['service_manager'] ?? [];
         $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
@@ -81,7 +65,7 @@ abstract class AbstractInputFilterTest extends TestCase
         $serviceManager->setService('ApplicationConfig', $config);
 
         // Load modules
-        $serviceManager->get('ModuleManager')->loadModules();
+        // $serviceManager->get('ModuleManager')->loadModules();
 
         $this->setServiceManager($serviceManager);
     }

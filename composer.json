@@ -1,38 +1,43 @@
 {
   "name": "iteaoffice/testing",
   "type": "library",
-  "license": "proprietary",
+  "license": "MIT",
   "description": "General code for testing",
   "keywords": [
     "test"
   ],
-  "homepage": "https://itea3.org",
+  "homepage": "https://itea4.org",
   "support": {
-    "email": "ticket@itea3.org"
+    "email": "ticket@itea4.org"
   },
   "authors": [
     {
       "name": "Johan van der Heide",
-      "email": "johan.van.der.heide@itea3.org"
+      "email": "johan.van.der.heide@itea4.org"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
-    "php": "~7.2 || ~7.3 || ~7.4",
-    "laminas/laminas-test": "3.3.*",
-    "laminas/laminas-mvc": "^3.1",
-    "laminas/laminas-mvc-console": "^1.2.0",
-    "laminas/laminas-mvc-plugins": "^1.0.1",
-    "laminas/laminas-navigation": "^2.9.0",
-    "pdepend/pdepend": "@stable",
-    "friendsofphp/php-cs-fixer": "@stable",
-    "squizlabs/php_codesniffer": "^3.5.3",
-    "phploc/phploc": "@stable",
-    "doctrine/data-fixtures": "@stable",
-    "jakub-onderka/php-parallel-lint": "@stable",
-    "jakub-onderka/php-console-highlighter": "@stable",
-    "phpstan/phpstan": "0.12.*",
-    "laminas/laminas-dependency-plugin": "^0.2"
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+    "laminas/laminas-test": "^4.0",
+    "doctrine/persistence": "^3.0.4",
+    "doctrine/orm": "^2.13",
+    "pdepend/pdepend": "^2.10",
+    "friendsofphp/php-cs-fixer": "^3.8",
+    "squizlabs/php_codesniffer": "^3.7",
+    "phploc/phploc": "^7.0",
+    "php-parallel-lint/php-parallel-lint": "^1.3",
+    "php-parallel-lint/php-console-highlighter": "^v1.0.0",
+    "phpstan/phpstan": "^1.8",
+    "phpunit/phpunit": "^9",
+    "vimeo/psalm": "^4.23 || ^5.0",
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "laminas/laminas-coding-standard": "^2.3"
+  },
+  "config": {
+    "vendor-dir": "vendor",
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "autoload": {
     "psr-4": {
@@ -41,8 +46,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0-dev",
-      "dev-develop": "2.1-dev"
+      "dev-master": "3.5-dev",
+      "dev-develop": "3.6-dev"
     }
   },
   "scripts": {

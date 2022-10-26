@@ -1,21 +1,11 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
- */
-
 namespace Testing\Util;
 
 use Admin\Entity\Permit\Entity;
 use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
 use General\Service\EmailService;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,49 +30,38 @@ abstract class AbstractServiceTest extends TestCase
      */
     use ConfigOverridesTrait;
 
-    public static function setUpBeforeClass(): void
+    public function getAdminServiceMock(): AdminService
     {
-        if (!defined('ITEAOFFICE_ENVIRONMENT')) {
-            define('ITEAOFFICE_ENVIRONMENT', 'test');
-        }
-
-        if (!defined('ITEAOFFICE_HOST')) {
-            define('ITEAOFFICE_HOST', 'test');
-        }
-    }
-
-    public function getAdminServiceMock(): MockObject
-    {
-        //Mock the admin service
+        // Mock the admin service
         $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
-            ->onlyMethods(['flushPermitsByEntityAndId',])->getMock();
+            ->onlyMethods(['flushPermitsByEntityAndId'])->getMock();
         $adminServiceMock->method('flushPermitsByEntityAndId');
 
+        /** @var AdminService $adminServiceMock */
         return $adminServiceMock;
     }
 
-    public function getEmailServiceMock(): MockObject
+    public function getEmailServiceMock(): EmailService
     {
-        //Mock the email service
+        // Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setWebInfo', 'send', 'setSender', 'addTo'])->getMock();
-        $emailServiceMock->method('setWebInfo');
-        $emailServiceMock->method('setSender');
-        $emailServiceMock->method('addTo');
+            ->onlyMethods(['createNewWebInfoEmailBuilder', 'sendBuilder'])->getMock();
+        $emailServiceMock->method('createNewWebInfoEmailBuilder');
         $emailServiceMock
-            ->method('send')
+            ->method('sendBuilder')
             ->willReturn(true);
 
+        /** @var EmailService $emailServiceMock */
         return $emailServiceMock;
     }
 
-    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null): MockObject
+    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null): EntityManager
     {
         $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata','getRepository'];
+        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
 
         $entityManagerMockBuilder->onlyMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();
@@ -92,13 +71,11 @@ abstract class AbstractServiceTest extends TestCase
         $entityManagerMock->method('remove');
         $entityManagerMock->method('contains');
 
-
         $entityRepositoryMock = $this->getMockBuilder(\Admin\Repository\Permit\Entity::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['flushPermitsByEntityAndId','findOneBy'])
+            ->onlyMethods(['findOneBy'])
             ->getMock();
 
-        $entityRepositoryMock->method('flushPermitsByEntityAndId');
         $entityRepositoryMock->method('findOneBy')->willReturn(new Entity());
 
         $map = [
@@ -117,7 +94,7 @@ abstract class AbstractServiceTest extends TestCase
         $entityManagerMock->method('getClassMetadata')
             ->willReturn($metaData);
 
-
+        /** @var EntityManager $entityManagerMock */
         return $entityManagerMock;
     }
 }

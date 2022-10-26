@@ -1,14 +1,5 @@
 <?php
 
-/**
- * ITEA Office all rights reserved
- *
- * @category  Admin
- *
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
- */
-
 namespace Testing\Util;
 
 use Laminas\ServiceManager\ServiceManager;
@@ -20,13 +11,12 @@ use Laminas\ServiceManager\ServiceManager;
  */
 trait MockServiceTrait
 {
-
     /**
      * Store original objects/services here to reset them later
      *
      * @var array
      */
-    private $serviceBackup = [];
+    private array $serviceBackup = [];
 
     protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager): void
     {

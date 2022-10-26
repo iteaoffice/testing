@@ -1,3 +1,6 @@
 .php_cs.cache
 .phpunit.result.cache
 vendor
+.idea
+/composer.phar
+/composer.lock
