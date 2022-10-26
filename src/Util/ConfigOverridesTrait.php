@@ -9,7 +9,7 @@ namespace Testing\Util;
  */
 trait ConfigOverridesTrait
 {
-    private $configOverrides = [];
+    private array $configOverrides = [];
 
     protected function getConfigOverrides(): array
     {

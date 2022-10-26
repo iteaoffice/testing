@@ -17,8 +17,10 @@
     }
   ],
   "require": {
-    "php": "^8.0 || ^8.1",
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
     "laminas/laminas-test": "^4.0",
+    "doctrine/persistence": "^3.0.4",
+    "doctrine/orm": "^2.13",
     "pdepend/pdepend": "^2.10",
     "friendsofphp/php-cs-fixer": "^3.8",
     "squizlabs/php_codesniffer": "^3.7",
@@ -42,25 +44,10 @@
       "Testing\\": "src/"
     }
   },
-  "replace": {
-    "laminas/laminas-cache-storage-adapter-apc": "*",
-    "laminas/laminas-cache-storage-adapter-blackhole": "*",
-    "laminas/laminas-cache-storage-adapter-dba": "*",
-    "laminas/laminas-cache-storage-adapter-ext-mongodb": "*",
-    "laminas/laminas-cache-storage-adapter-filesystem": "*",
-    "laminas/laminas-cache-storage-adapter-memory": "*",
-    "laminas/laminas-cache-storage-adapter-memcache": "*",
-    "laminas/laminas-cache-storage-adapter-memcached": "*",
-    "laminas/laminas-cache-storage-adapter-mongodb": "*",
-    "laminas/laminas-cache-storage-adapter-session": "*",
-    "laminas/laminas-cache-storage-adapter-wincache": "*",
-    "laminas/laminas-cache-storage-adapter-xcache": "*",
-    "laminas/laminas-cache-storage-adapter-zend-server": "*"
-  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0-dev",
-      "dev-develop": "3.1-dev"
+      "dev-master": "3.5-dev",
+      "dev-develop": "3.6-dev"
     }
   },
   "scripts": {

@@ -16,7 +16,7 @@ trait MockServiceTrait
      *
      * @var array
      */
-    private $serviceBackup = [];
+    private array $serviceBackup = [];
 
     protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager): void
     {

@@ -32,14 +32,14 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      *
      * @var array
      */
-    protected $configOverrides = [];
+    protected array $configOverrides = [];
 
     /**
      * Store original objects/services here to reset them later
      *
      * @var array
      */
-    private $serviceBackup = [];
+    private array $serviceBackup = [];
 
     /**
      * Generate a dummy contact with the specified access roles
