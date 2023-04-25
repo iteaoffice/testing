@@ -5,7 +5,7 @@ namespace Testing\Util;
 use Admin\Entity\Permit\Entity;
 use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
-use General\Service\EmailService;
+use Mailing\Service\EmailService;
 use PHPUnit\Framework\TestCase;
 
 /**
