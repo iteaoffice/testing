@@ -16,9 +16,10 @@
       "email": "johan.van.der.heide@itea4.org"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
-    "laminas/laminas-test": "^4.8",
+    "laminas/laminas-test": "^4.9",
     "doctrine/orm": "^2.14 || ^3.0",
     "pdepend/pdepend": "^2.12",
     "friendsofphp/php-cs-fixer": "^3.16",
@@ -44,8 +45,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.6-dev",
-      "dev-develop": "3.7-dev"
+      "dev-master": "4.0-dev",
+      "dev-develop": "4.1-dev"
     }
   },
   "scripts": {
