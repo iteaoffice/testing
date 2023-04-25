@@ -46,10 +46,10 @@ abstract class AbstractServiceTest extends TestCase
         // Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['createNewWebInfoEmailBuilder', 'sendBuilder'])->getMock();
+            ->onlyMethods(['createNewWebInfoEmailBuilder', 'send'])->getMock();
         $emailServiceMock->method('createNewWebInfoEmailBuilder');
         $emailServiceMock
-            ->method('sendBuilder')
+            ->method('send')
             ->willReturn(true);
 
         /** @var EmailService $emailServiceMock */
