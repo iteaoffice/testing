@@ -19,6 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+    "symfony/finder": "^6.2",
     "laminas/laminas-test": "^4.9",
     "doctrine/orm": "^2.14 || ^3.0",
     "dg/bypass-finals": "^1.4",
