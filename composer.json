@@ -30,6 +30,7 @@
     "phpunit/phpunit": "^10",
     "vimeo/psalm": "^5.9",
     "jetbrains/phpstorm-attributes": "^1.0",
+    "rector/rector": "^1",
     "laminas/laminas-coding-standard": "^2.6"
   },
   "config": {
@@ -61,6 +62,7 @@
     "php-lint": "./vendor/bin/parallel-lint src",
     "cs": "./vendor/bin/phpcs",
     "cbf": "./vendor/bin/phpcbf",
-    "cs-fix": "./vendor/bin/php-cs-fixer fix -v src"
+    "cs-fix": "./vendor/bin/php-cs-fixer fix -v src",
+    "rector": "./vendor/bin/rector"
   }
 }
