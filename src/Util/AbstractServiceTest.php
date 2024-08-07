@@ -5,7 +5,7 @@ namespace Testing\Util;
 use Admin\Entity\Permit\Entity;
 use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
-use General\Service\EmailService;
+use Mailing\Service\EmailService;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -46,10 +46,10 @@ abstract class AbstractServiceTest extends TestCase
         // Mock the email service
         $emailServiceMock = $this->getMockBuilder(EmailService::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['createNewWebInfoEmailBuilder', 'sendBuilder'])->getMock();
+            ->onlyMethods(['createNewWebInfoEmailBuilder', 'send'])->getMock();
         $emailServiceMock->method('createNewWebInfoEmailBuilder');
         $emailServiceMock
-            ->method('sendBuilder')
+            ->method('send')
             ->willReturn(true);
 
         /** @var EmailService $emailServiceMock */

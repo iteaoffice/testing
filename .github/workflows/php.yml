@@ -18,19 +18,20 @@ jobs:
           - locked
           - highest
         php-version:
-          - 8.0
           - 8.1
           - 8.2
+          - 8.3
+          - 8.4
         operating-system:
           - ubuntu-latest
 
     runs-on: ${{ matrix.operating-system }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: shivammathur/setup-php@v2
         with:
           coverage: "xdebug"
           php-version: "${{ matrix.php-version }}"
@@ -38,7 +39,7 @@ jobs:
           tools: composer:v2
 
       - name: "Cache dependencies"
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.composer/cache

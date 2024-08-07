@@ -16,7 +16,7 @@ trait ConfigOverridesTrait
         return $this->configOverrides;
     }
 
-    protected function setConfigOverrides(array $configOverrides)
+    protected function setConfigOverrides(array $configOverrides): void
     {
         $this->configOverrides = $configOverrides;
     }
