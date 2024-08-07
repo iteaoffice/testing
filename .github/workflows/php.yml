@@ -28,10 +28,10 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: "Install PHP"
-        uses: shivammathur/setup-php@v4
+        uses: shivammathur/setup-php@v2
         with:
           coverage: "xdebug"
           php-version: "${{ matrix.php-version }}"
