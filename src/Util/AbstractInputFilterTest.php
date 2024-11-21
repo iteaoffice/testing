@@ -58,7 +58,7 @@ abstract class AbstractInputFilterTest extends TestCase
 
         // Prepare the service manager
         $serviceManagerConfigArray = $config['service_manager'] ?? [];
-        $serviceManagerConfig = new ServiceManagerConfig($serviceManagerConfigArray);
+        $serviceManagerConfig      = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();
         $serviceManagerConfig->configureServiceManager($serviceManager);
@@ -96,7 +96,7 @@ abstract class AbstractInputFilterTest extends TestCase
      *
      * @return MockObject|EntityManager
      */
-    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null)
+    protected function getEntityManagerMock(?string $entityClass = null, ?MockObject $repositoryMock = null)
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 

@@ -84,7 +84,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
 
         $this->setApplicationConfig(
             ArrayUtils::merge(
-                // Grabbing the full application + module configuration:
+            // Grabbing the full application + module configuration:
                 file_exists($configFile)
                     ? include $configFile
                     :
@@ -120,8 +120,8 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
      * Assert route access for controller
      *
      * @param string $route
-     * @param array  $accessRoles
-     * @param int    $expectedStatusCode
+     * @param array $accessRoles
+     * @param int $expectedStatusCode
      */
     public function assertRouteAccess(string $route, array $accessRoles = [], $expectedStatusCode = 200)
     {
@@ -158,11 +158,11 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
     /**
      * Mock a service in the service manager, keeping a backup of the original instance
      *
-     * @param string         $service
-     * @param object         $mockInstance
-     * @param ServiceManager $serviceManager
+     * @param string $service
+     * @param object $mockInstance
+     * @param null|ServiceManager $serviceManager
      */
-    protected function mockService(string $service, $mockInstance, ServiceManager $serviceManager = null)
+    protected function mockService(string $service, object $mockInstance, ?ServiceManager $serviceManager = null)
     {
         if (null === $serviceManager) {
             $serviceManager = $this->getApplicationServiceLocator();
@@ -182,7 +182,7 @@ abstract class AbstractControllerTest extends AbstractHttpControllerTestCase
         $this->resetService(BjyAuthorize::class);
     }
 
-    protected function resetService(string $service, ServiceManager $serviceManager = null): void
+    protected function resetService(string $service, ?ServiceManager $serviceManager = null): void
     {
         if (array_key_exists($service, $this->serviceBackup)) {
             if (null === $serviceManager) {

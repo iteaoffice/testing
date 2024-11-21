@@ -6,6 +6,7 @@ use Admin\Entity\Permit\Entity;
 use Admin\Service\AdminService;
 use Doctrine\ORM\EntityManager;
 use Mailing\Service\EmailService;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -56,12 +57,12 @@ abstract class AbstractServiceTest extends TestCase
         return $emailServiceMock;
     }
 
-    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null): EntityManager
+    protected function getEntityManagerMock(?string $entityClass = null, ?MockObject $repositoryMock = null): EntityManager
     {
         $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
+        $mockMethods              = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
 
         $entityManagerMockBuilder->onlyMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();
