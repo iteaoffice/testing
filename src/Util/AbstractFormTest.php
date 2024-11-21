@@ -99,7 +99,7 @@ abstract class AbstractFormTest extends TestCase
      *
      * @return MockObject|EntityManager
      */
-    protected function getEntityManagerMock(string $entityClass = null, MockObject $repositoryMock = null): MockObject
+    protected function getEntityManagerMock(?string $entityClass = null, ?MockObject $repositoryMock = null): MockObject
     {
         $mockRepository = (isset($entityClass) && isset($repositoryMock));
 

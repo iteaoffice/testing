@@ -56,12 +56,12 @@ abstract class AbstractServiceTest extends TestCase
         return $emailServiceMock;
     }
 
-    protected function getEntityManagerMock(string $entityClass = null, $repositoryMock = null): EntityManager
+    protected function getEntityManagerMock(?string $entityClass = null, ?$repositoryMock = null): EntityManager
     {
         $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
+        $mockMethods              = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
 
         $entityManagerMockBuilder->onlyMethods($mockMethods);
         $entityManagerMock = $entityManagerMockBuilder->getMock();
