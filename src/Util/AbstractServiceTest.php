@@ -58,8 +58,10 @@ abstract class AbstractServiceTest extends TestCase
         return $emailServiceMock;
     }
 
-    protected function getEntityManagerMock(?string $entityClass = null, null|MockObject|MockBuilder $repositoryMock = null): EntityManager
-    {
+    protected function getEntityManagerMock(
+        ?string $entityClass = null,
+        null|MockObject|MockBuilder $repositoryMock = null
+    ): EntityManager {
         $mockRepository = isset($entityClass, $repositoryMock);
 
         $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
@@ -90,7 +92,7 @@ abstract class AbstractServiceTest extends TestCase
 
         $entityManagerMock->expects($this->any())
             ->method('getRepository')
-            ->willReturn($this->returnValueMap($map));
+            ->willReturnMap($map);
 
         $metaData = new TestObjectMetadata();
         $entityManagerMock->method('getClassMetadata')

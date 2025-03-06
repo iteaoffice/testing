@@ -60,7 +60,7 @@ abstract class AbstractFormTest extends TestCase
         );
 
         // Prepare the service manager
-        $serviceManagerConfigArray = isset($config['service_manager']) ? $config['service_manager'] : [];
+        $serviceManagerConfigArray = $config['service_manager'] ?? [];
         $serviceManagerConfig      = new ServiceManagerConfig($serviceManagerConfigArray);
 
         $serviceManager = new ServiceManager();

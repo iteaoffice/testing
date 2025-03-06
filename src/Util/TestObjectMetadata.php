@@ -84,11 +84,11 @@ class TestObjectMetadata implements ClassMetadata
         return $fieldName === 'parent';
     }
 
-    public function getIdentifierValues($entity)
+    public function getIdentifierValues($entity): array
     {
     }
 
-    public function getIdentifierFieldNames()
+    public function getIdentifierFieldNames(): array
     {
     }
 
