@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Mailing\Service\EmailService;
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,9 +35,7 @@ abstract class AbstractServiceTest extends TestCase
 
     public function getAdminServiceMock(): AdminService
     {
-        // Mock the admin service
-        $adminServiceMock = $this->getMockBuilder(AdminService::class)->disableOriginalConstructor()
-            ->onlyMethods(['flushPermitsByEntityAndId'])->getMock();
+        $adminServiceMock = $this->createStub(AdminService::class);
         $adminServiceMock->method('flushPermitsByEntityAndId');
 
         /** @var AdminService $adminServiceMock */
@@ -59,27 +58,20 @@ abstract class AbstractServiceTest extends TestCase
     }
 
     protected function getEntityManagerMock(
-        ?string $entityClass = null,
-        null|MockObject|MockBuilder $repositoryMock = null
-    ): EntityManager {
+        ?string                     $entityClass = null,
+        null|MockObject|MockBuilder|Stub $repositoryMock = null
+    ): EntityManager
+    {
         $mockRepository = isset($entityClass, $repositoryMock);
 
-        $entityManagerMockBuilder = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor();
-        $mockMethods              = ['persist', 'flush', 'remove', 'contains', 'getClassMetadata', 'getRepository'];
-
-        $entityManagerMockBuilder->onlyMethods($mockMethods);
-        $entityManagerMock = $entityManagerMockBuilder->getMock();
+        $entityManagerMock = $this->createStub(EntityManager::class);
 
         $entityManagerMock->method('persist');
         $entityManagerMock->method('flush');
         $entityManagerMock->method('remove');
         $entityManagerMock->method('contains');
 
-        $entityRepositoryMock = $this->getMockBuilder(\Admin\Repository\Permit\Entity::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['findOneBy'])
-            ->getMock();
-
+        $entityRepositoryMock = $this->createStub(\Admin\Repository\Permit\Entity::class);
         $entityRepositoryMock->method('findOneBy')->willReturn(new Entity());
 
         $map = [
@@ -90,8 +82,7 @@ abstract class AbstractServiceTest extends TestCase
             $map[] = [$entityClass, $repositoryMock];
         }
 
-        $entityManagerMock->expects($this->any())
-            ->method('getRepository')
+        $entityManagerMock->method('getRepository')
             ->willReturnMap($map);
 
         $metaData = new TestObjectMetadata();

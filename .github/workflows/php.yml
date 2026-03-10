@@ -21,6 +21,7 @@ jobs:
           - 8.2
           - 8.3
           - 8.4
+          - 8.5
         operating-system:
           - ubuntu-latest
 
@@ -47,11 +48,9 @@ jobs:
           restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
 
       - name: "Install highest dependencies"
-        if: ${{ matrix.dependencies == 'highest' }}
         run: "composer update --no-interaction --no-progress --no-suggest --ignore-platform-req=php"
 
       - name: "Install locked dependencies"
-        if: ${{ matrix.dependencies == 'locked' }}
         run: "composer install --no-interaction --no-progress --no-suggest --ignore-platform-req=php"
 
       - name: Run Lint Checker suite
